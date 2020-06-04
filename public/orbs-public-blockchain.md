@@ -23,9 +23,39 @@ To complete this guide you will need the following set up:
   
   Use `brew install node` to get it installed
 
-- [Terraform](https://www.terraform.io/downloads.html) from HasiCorp
+- [Terraform](https://www.terraform.io/downloads.html)
   
-  Use `brew install terraform` to get it installed
+  Nebula currently supports the latest Terraform (v0.12.x) and have been tested on version v0.12.23
+  for most scenarios. We recommend installating this specific version to have a fail-proof experience.
+
+  For macOS:
+
+  Download Terraform by running this command in your Terminal:
+  `wget https://releases.hashicorp.com/terraform/0.12.23/terraform_0.12.23_darwin_amd64.zip`
+
+  Then unzip it:
+  `unzip terraform_0.12.23_darwin_amd64.zip`
+
+  Grant it executable permissions:
+  `chmod +x terraform && sudo mv terraform /usr/local/bin/`
+
+  Make sure it's installed by typing in:
+  `terraform --version` - you should see the version printed out
+
+  For Linux:
+
+  Download Terraform by running this command in your Terminal:
+  `curl -O https://releases.hashicorp.com/terraform/0.12.23/terraform_0.12.23_darwin_amd64.zip`
+
+  Then unzip it: (If unzip is not installed, install it by running `apt-get install unzip`)
+  `unzip terraform_0.12.23_darwin_amd64.zip`
+
+  Grant it executable permissions:
+  `chmod +x terraform && sudo mv terraform /usr/local/bin/`
+
+  Make sure it's installed by typing in:
+  `terraform --version` - you should see the version printed out
+
 - [Orbs Key Generator](https://www.github.com/orbs-network/orbs-key-generator)
 
   Use `brew install orbs-network/devtools/orbs-key-generator` to get it installed (requires a Mac)
@@ -81,6 +111,8 @@ The content of the `orbs-node.json` should be:
         "sshPublicKey": "$LOCATION_TO_PUB_FILE",
         "orbsAddress": "$ORBS_PUBLIC_NODE_ADDRESS",
         "publicIp": "$NODE_AWS_IP",
+        "backend": true,
+        "ephemeralStorage": false,
         "region": "$NODE_AWS_REGION",
         "nodeSize": "m4.xlarge",
         "nodeCount": 1,
@@ -97,6 +129,7 @@ You will need:
 * $LOCATION_TO_PUB_FILE - The SSH public and private key file path (the generated pub file)
 * $ORBS_PUBLIC_NODE_ADDRESS - The Orbs node address (from the Orbs key generator - __without the leading 0x__)
 * $NODE_AWS_IP - The IP address (from AWS)
+* Backend is a new feature that allows you to securely store your Terraform state created by Nebula into your AWS account. (Into a designated S3 bucket) Making it easy to share with other DevOps personel in your company, or aid in recovery or migration of your Nebula deployment between computers. For example, create a node from one laptop, and still be able to destroy or upgrade it from a completely different one. Terraform knows how to sync the state into the S3 bucket between all users / usages of it automatically and also brings to the plate a feature rich provisioning state lock to prevent from 2 people trying to alter your Orbs node in the same exact time.
 * $NODE_AWS_REGION - The AWS region (from AWS)
 * $ETHEREUM_NODE_ADDRESS - this parameter is _optional_, used to configure an external Ethereum node. If the parameter is not included, an internal Ethereum node will be used. If you have your own synced Ethereum node, you can use it as a value for ethereumEndpoint. Alternatively, you can use "http://eth.orbs.com" , which we provide for your convenience (configure it by writing "ethereumEndpoint": "http://eth.orbs.com"). Our long term goal is to use the Ethereum node that is internal to the Orbs node. 
 * $YOUR_OFFICE_IP - This is the IP address/range that we will grant access to for ssh connections to the node, you will still need the public key to connect - it is required only in cases of troubleshooting. The format is standard CIDR so a range may be provided by changing the mask. Any IP not in the range will not be able to SSH to the node, even if it has the SSH key file.
@@ -106,6 +139,18 @@ Other parameters (no need to change them):
 The `cachePath` configuration tells nebula where to store the terraform installation meta-data created during the deploy stage. It is required in cases where you wish to remove the node from AWS. You should store these files and back them up so you can run maintenance if required.
 
 The `awsProfile` configuration can be changed if you are using multiple aws configurations and want a specific one to be applied.
+
+The `ephemeralStorage` option (default value: `false`) provides an ability to make the provisioned EFS disk for block storage become ephemeral meaning it will be 
+destroyed upon destroying the node. (aka nebula destroy) 
+this is usually not preferred by validators unless you wish to re-sync the entire storage on every node upgrade/maintenance.
+
+## Some warning as to updating your node configuration JSON file
+While the configuration is quite easily changeable, please do remember that any modification to your configuration file MUST be done while the node is DOWN.
+For example: if you decide you want to set a backend syncing using the Terraform state syncing to S3 (Just as an example). 
+You should do the following to perform the change:
+* run nebula destroy
+* update your configuration JSON file to reflect your changes (for example add `"backend": true`)
+* run nebula create
 
 ### Run Nebula CLI to deploy the node
 
