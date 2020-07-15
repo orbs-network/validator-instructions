@@ -1,4 +1,4 @@
-# Setting up an Orbs Public Blockchain Node using Nebula CLI
+# Setting up an Orbs Public Blockchain Node using Strela CLI
 
 This step-by-step guide will walk you through creating a new node and connecting it to an existing Orbs network.
 
@@ -25,7 +25,7 @@ To complete this guide you will need the following set up:
 
 - [Terraform](https://www.terraform.io/downloads.html)
   
-  Nebula currently supports the latest Terraform (v0.12.x) and have been tested on version v0.12.23
+  Strela currently supports the latest Terraform (v0.12.x) and have been tested on version v0.12.23
   for most scenarios. We recommend installating this specific version to have a fail-proof experience.
 
   For macOS:
@@ -91,13 +91,13 @@ We require an Orbs private key and an Orbs address. These can be generated using
 
 The output of the key generator should be securely stored and used in the `orbs-node.json` configuration file and node deployment command as explained below. You will need the `NodeAddress` and `NodePrivateKey` later on __without the leading 0x__.
 
-### Install Nebula via NPM
+### Install Strela via NPM
 
-To install Nebula run
+To install Strela run
 
-    npm install -g @orbs-network/orbs-nebula
+    npm install -g @orbs-network/orbs-strela
 
-If you have previously installed Nebula and you are performing a new deploy, we recommend updating it by running `npm update -g @orbs-network/orbs-nebula`
+If you have previously installed Strela and you are performing a new deploy, we recommend updating it by running `npm update -g @orbs-network/orbs-strela`
 
 ### Configure the boilerplate JSON file
 
@@ -114,8 +114,8 @@ The content of the `orbs-node.json` should be:
         "backend": true,
         "ephemeralStorage": false,
         "region": "$NODE_AWS_REGION",
-        "nodeSize": "m4.xlarge",
-        "nodeCount": 1,
+        "nodeSize": "r5.large",
+        "nodeCount": 0,
         "bootstrapUrl": "https://s3.amazonaws.com/orbs-bootstrap-prod/boyar/config.json",
         "ethereumChain": "mainnet",
         "ethereumTopologyContractAddress": "0x804c8336846d8206c95CEe24752D514210B5a240",
@@ -129,43 +129,43 @@ You will need:
 * $LOCATION_TO_PUB_FILE - The SSH public and private key file path (the generated pub file)
 * $ORBS_PUBLIC_NODE_ADDRESS - The Orbs node address (from the Orbs key generator - __without the leading 0x__)
 * $NODE_AWS_IP - The IP address (from AWS)
-* Backend is a new feature that allows you to securely store your Terraform state created by Nebula into your AWS account. (Into a designated S3 bucket) Making it easy to share with other DevOps personel in your company, or aid in recovery or migration of your Nebula deployment between computers. For example, create a node from one laptop, and still be able to destroy or upgrade it from a completely different one. Terraform knows how to sync the state into the S3 bucket between all users / usages of it automatically and also brings to the plate a feature rich provisioning state lock to prevent from 2 people trying to alter your Orbs node in the same exact time.
+* Backend is a new feature that allows you to securely store your Terraform state created by Strela into your AWS account. (Into a designated S3 bucket) Making it easy to share with other DevOps personel in your company, or aid in recovery or migration of your Strela deployment between computers. For example, create a node from one laptop, and still be able to destroy or upgrade it from a completely different one. Terraform knows how to sync the state into the S3 bucket between all users / usages of it automatically and also brings to the plate a feature rich provisioning state lock to prevent from 2 people trying to alter your Orbs node in the same exact time.
 * $NODE_AWS_REGION - The AWS region (from AWS)
 * $ETHEREUM_NODE_ADDRESS - this parameter is _optional_, used to configure an external Ethereum node. If the parameter is not included, an internal Ethereum node will be used. If you have your own synced Ethereum node, you can use it as a value for ethereumEndpoint. Alternatively, you can use "http://eth.orbs.com" , which we provide for your convenience (configure it by writing "ethereumEndpoint": "http://eth.orbs.com"). Our long term goal is to use the Ethereum node that is internal to the Orbs node. 
 * $YOUR_OFFICE_IP - This is the IP address/range that we will grant access to for ssh connections to the node, you will still need the public key to connect - it is required only in cases of troubleshooting. The format is standard CIDR so a range may be provided by changing the mask. Any IP not in the range will not be able to SSH to the node, even if it has the SSH key file.
 
 Other parameters (no need to change them):
 
-The `cachePath` configuration tells nebula where to store the terraform installation meta-data created during the deploy stage. It is required in cases where you wish to remove the node from AWS. You should store these files and back them up so you can run maintenance if required.
+The `cachePath` configuration tells strela where to store the terraform installation meta-data created during the deploy stage. It is required in cases where you wish to remove the node from AWS. You should store these files and back them up so you can run maintenance if required.
 
 The `awsProfile` configuration can be changed if you are using multiple aws configurations and want a specific one to be applied.
 
 The `ephemeralStorage` option (default value: `false`) provides an ability to make the provisioned EFS disk for block storage become ephemeral meaning it will be 
-destroyed upon destroying the node. (aka nebula destroy) 
+destroyed upon destroying the node. (aka strela destroy) 
 this is usually not preferred by validators unless you wish to re-sync the entire storage on every node upgrade/maintenance.
 
 ## Some warning as to updating your node configuration JSON file
 While the configuration is quite easily changeable, please do remember that any modification to your configuration file MUST be done while the node is DOWN.
 For example: if you decide you want to set a backend syncing using the Terraform state syncing to S3 (Just as an example). 
 You should do the following to perform the change:
-* run nebula destroy
+* run strela destroy
 * update your configuration JSON file to reflect your changes (for example add `"backend": true`)
-* run nebula create
+* run strela create
 
-### Run Nebula CLI to deploy the node
+### Run Strela CLI to deploy the node
 
 To avoid having the orbs node private key as part of your command history, we recommend creating a file called `orbs-private-key.txt` and put the orbs node private key inside it, __without the leading 0x__.
 That key was generated by the key generator and should be in a hex string of size 64 characters, like `f5f83Ee70a85fFF2exxxxxxxxxxxxxxxxxxxxxxxxxxx334932F34C8D629165Ed`.
 
 To provision the resources required for the node:
 
-    nebula create -f orbs-node.json --orbs-private-key $(cat path/to/orbs-private-key.txt)
+    strela create -f orbs-node.json --orbs-private-key $(cat path/to/orbs-private-key.txt)
 
 Terraform files corresponding to nodes can be found in the folder defined in `cachePath` and should be backed up.
 
 If needed, the command to remove all resources provisioned for the node is:
            
-    nebula destroy -f orbs-node.json
+    strela destroy -f orbs-node.json
     
 ### IMPORTANT! ###
 After deployment make sure to backup and securely store - 
@@ -212,6 +212,6 @@ __Congratulations!__
 
 2. If the metrics page does not respond, it could be that the Ethereum node did not finish syncing - this takes several hours.
 
-3. If you are having trouble with Ethereum node, add `"ethereumEndpoint": "http://eth.orbs.com"` to your `node.json` and redeploy the node (`nebula destroy` and then `nebula create` as usual). If you have your own synced Ethereum node, you can use it as a value for `ethereumEndpoint`. We only provide `eth.orbs.com` for your convenience. Our long term goal is to use the Ethereum node that belongs to the Orbs node.
+3. If you are having trouble with Ethereum node, add `"ethereumEndpoint": "http://eth.orbs.com"` to your `node.json` and redeploy the node (`strela destroy` and then `strela create` as usual). If you have your own synced Ethereum node, you can use it as a value for `ethereumEndpoint`. We only provide `eth.orbs.com` for your convenience. Our long term goal is to use the Ethereum node that belongs to the Orbs node.
 
 4. Contact Orbs for any other issues
