@@ -99,50 +99,51 @@ To install Strela run
 
 If you have previously installed Strela and you are performing a new deploy, we recommend updating it by running `npm update -g @orbs-network/orbs-strela`
 
+### Create a dedicated folder
+
+Create a dedicated folder "orbs-v2-beta"
+This folder will store the logs and the artifacts for future needs (such as 'destroy'). 
+Change your path into the folder and proceed with the instructions there.
+Backup this folder upon completion of the instructions and do not delete it.
+--- DO NOT DELETE THIS FOLDER ---
+
 ### Configure the boilerplate JSON file
 
-The thing to do next is to create the `orbs-node.json` file and configure it as required for the new node.
+The thing to do next is to create the `orbs-beta-node.json` file and configure it as required for the new node.
 
-The content of the `orbs-node.json` should be:
+The content of the `orbs-beta-node.json` should be:
 
     {
-        "name": "$VALIDATOR_NAME-orbs-prod",
+        "name": "$VALIDATOR_NAME-orbs-beta",
         "awsProfile": "default",
         "sshPublicKey": "$LOCATION_TO_PUB_FILE",
         "orbsAddress": "$ORBS_PUBLIC_NODE_ADDRESS",
         "publicIp": "$NODE_AWS_IP",
-        "backend": true,
-        "ephemeralStorage": false,
         "region": "$NODE_AWS_REGION",
         "nodeSize": "r5.large",
         "nodeCount": 0,
-        "bootstrapUrl": "https://s3.amazonaws.com/orbs-bootstrap-prod/boyar/config.json",
+        "bootstrapUrl": "TBD_FIX_ME_KIRILL",
         "ethereumChain": "mainnet",
-        "ethereumTopologyContractAddress": "0x804c8336846d8206c95CEe24752D514210B5a240",
-        "cachePath": "./_terraform",
+        "ethereumTopologyContractAddress": "TBD_FIX_ME_KIRILL",
+        "cachePath": "./_terraform_beta",
         "ethereumEndpoint": "$ETHEREUM_NODE_ADDRESS",
         "incomingSshCidrBlocks": ["$YOUR_OFFICE_IP/32"]
     }
 
 You will need:
-* $VALIDATOR_NAME-orbs-node - Name for your Validator name, such as a company name or brand name.
+* $VALIDATOR_NAME-orbs-beta - Name for your Validator name, such as a company name or brand name.
 * $LOCATION_TO_PUB_FILE - The SSH public and private key file path (the generated pub file)
 * $ORBS_PUBLIC_NODE_ADDRESS - The Orbs node address (from the Orbs key generator - __without the leading 0x__)
 * $NODE_AWS_IP - The IP address (from AWS)
-* Backend is a new feature that allows you to securely store your Terraform state created by Strela into your AWS account. (Into a designated S3 bucket) Making it easy to share with other DevOps personel in your company, or aid in recovery or migration of your Strela deployment between computers. For example, create a node from one laptop, and still be able to destroy or upgrade it from a completely different one. Terraform knows how to sync the state into the S3 bucket between all users / usages of it automatically and also brings to the plate a feature rich provisioning state lock to prevent from 2 people trying to alter your Orbs node in the same exact time.
 * $NODE_AWS_REGION - The AWS region (from AWS)
-* $ETHEREUM_NODE_ADDRESS - this parameter is _optional_, used to configure an external Ethereum node. If the parameter is not included, an internal Ethereum node will be used. If you have your own synced Ethereum node, you can use it as a value for ethereumEndpoint. Alternatively, you can use "http://eth.orbs.com" , which we provide for your convenience (configure it by writing "ethereumEndpoint": "http://eth.orbs.com"). Our long term goal is to use the Ethereum node that is internal to the Orbs node. 
-* $YOUR_OFFICE_IP - This is the IP address/range that we will grant access to for ssh connections to the node, you will still need the public key to connect - it is required only in cases of troubleshooting. The format is standard CIDR so a range may be provided by changing the mask. Any IP not in the range will not be able to SSH to the node, even if it has the SSH key file.
+* $ETHEREUM_NODE_ADDRESS - used to configure an external Ethereum node. If you have your own synced Ethereum node, you can use it as a value for ethereumEndpoint. Alternatively, you can use "http://eth.orbs.com" , which we provide for your convenience (configure it by writing "ethereumEndpoint": "http://eth.orbs.com"). Our long term goal is to use the Ethereum node that is internal to the Orbs node. 
+* $YOUR_OFFICE_IP - This is the IP address/range that we will grant access to for ssh connections to the node. You will still need the public key to connect - it is required only in cases of troubleshooting. The format is standard CIDR so a range may be provided by changing the mask. Any IP not in the range will not be able to SSH to the node, even if it has the SSH key file.
 
 Other parameters (no need to change them):
 
 The `cachePath` configuration tells Strela where to store the terraform installation meta-data created during the deploy stage. It is required in cases where you wish to remove the node from AWS. You should store these files and back them up so you can run maintenance if required.
 
-The `awsProfile` configuration can be changed if you are using multiple aws configurations and want a specific one to be applied.
-
-The `ephemeralStorage` option (default value: `false`) provides an ability to make the provisioned EFS disk for block storage become ephemeral meaning it will be 
-destroyed upon destroying the node. (aka strela destroy) 
-this is usually not preferred by validators unless you wish to re-sync the entire storage on every node upgrade/maintenance.
+The `awsProfile` configuration can be changed if you are using multiple AWS configurations and want a specific one to be applied.
 
 ## Some warning as to updating your node configuration JSON file
 While the configuration is quite easily changeable, please do remember that any modification to your configuration file MUST be done while the node is DOWN.
@@ -159,59 +160,44 @@ That key was generated by the key generator and should be in a hex string of siz
 
 To provision the resources required for the node:
 
-    strela create -f orbs-node.json --orbs-private-key $(cat path/to/orbs-private-key.txt)
+    strela create -f orbs-node-beta.json --orbs-private-key $(cat path/to/orbs-private-key.txt)
 
 Terraform files corresponding to nodes can be found in the folder defined in `cachePath` and should be backed up.
 
 If needed, the command to remove all resources provisioned for the node is:
            
-    strela destroy -f orbs-node.json
+    strela destroy -f orbs-node-beta.json
     
 ### IMPORTANT! ###
-After deployment make sure to backup and securely store - 
+After deployment **make sure to backup and securely store** - 
 1. __Orbs keys__ (and any other credentials you used and configured, such as SSH keys)
 2. __`_terraform` folder contents__ - these are required to destroy or redeploy the node
 3. The __`orbs-node.json`__ file
 
-### Registering to the Orbs public network
+### Registering to the Orbs public beta
 
-In order to register on the network, please follow [the Validator Registration process](https://github.com/orbs-network/orbs-ethereum-contracts/blob/master/voting/ethereum/instructions/validator_registration.md)
+In order to register on the network, pleaseuse the tool at [Guardian Registration](https://guardians.orbs.network/registration)
 
 Contact Orbs after registration is done.
 
-
 ### What happens after deployment
 
-Once the deployment finishes, the node goes through several stages:
-1. First it will wait for the Ethereum node to finish syncing - this can take several hours and until that is done, the node will not be operational
-2. It will then bootstrap the initial network configuration.
-3. It will retrieve the network topology from an Ethereum contract to learn who are its other peers and connect to them.
-
-At that point if everything passes and the node is part of the topology, it will start syncing with other nodes.
+Once the deployment finishes, the node will start the various Orbs node services and, once it is part of the topology, it will start syncing with other nodes.
 
 ### How to inspect the network health
-
-Now, your node has joined the network and should be syncing the existing blocks.
-
-To inspect your node operation on every virtual chain, Orbs has developed a special inspection route available on each node that provides access to node metrics.
-To access the metrics, navigate to `http://$NODE_IP/vchains/1100000/metrics` replacing __$NODE_IP__ with 
-your node IP.
-
-You node will not be able to respond to any requests until its Ethereum node finished syncing - this can take several hours from deploy.
-
-The JSON you see will include a property called `BlockStorage.BlockHeight`, which indicates the block height that the network is currently on.
-Try refreshing this metrics page a couple of times, you should see this value increasing.
-
-If this is the case it means that the network is alive and healthy. 
+[TBD_FIX_ME_KIRILL]
 
 __Congratulations!__
 
 ## Troubleshooting
+[TBD_FIX_ME_KIRILL]
 
-1. If you get an Terraform error that your IP does not exist, check whether the combination of ip and region is correct in the node configuration file (`orbs-node.json`)
+1. If you get an Terraform error that your IP does not exist, check whether the combination of ip and region is correct in the node configuration file (`orbs-node-beta.json`)
 
 2. If the metrics page does not respond, it could be that the Ethereum node did not finish syncing - this takes several hours.
 
-3. If you are having trouble with Ethereum node, add `"ethereumEndpoint": "http://eth.orbs.com"` to your `node.json` and redeploy the node (`strela destroy` and then `strela create` as usual). If you have your own synced Ethereum node, you can use it as a value for `ethereumEndpoint`. We only provide `eth.orbs.com` for your convenience. Our long term goal is to use the Ethereum node that belongs to the Orbs node.
+3. If you are having trouble with Ethereum node, add `"ethereumEndpoint": "http://eth.orbs.com"` to your `orbs-node-beta.json` and redeploy the node (`strela destroy` and then `strela create` as usual). If you have your own synced Ethereum node, you can use it as a value for `ethereumEndpoint`. We only provide `eth.orbs.com` for your convenience. Our long term goal is to use the Ethereum node that belongs to the Orbs node.
 
-4. Contact Orbs for any other issues
+4. If you're having Terraform errors, check your clock [TBD_FIX_ME_KIRILL]
+
+5. Contact Orbs for any other issues
