@@ -136,7 +136,7 @@ You will need:
 
 Other parameters (no need to change them):
 
-The `cachePath` configuration tells strela where to store the terraform installation meta-data created during the deploy stage. It is required in cases where you wish to remove the node from AWS. You should store these files and back them up so you can run maintenance if required.
+The `cachePath` configuration tells Strela where to store the terraform installation meta-data created during the deploy stage. It is required in cases where you wish to remove the node from AWS. You should store these files and back them up so you can run maintenance if required.
 
 The `awsProfile` configuration can be changed if you are using multiple aws configurations and want a specific one to be applied.
 
