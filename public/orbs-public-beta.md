@@ -122,12 +122,34 @@ The content of the `orbs-beta-node.json` should be:
         "region": "$NODE_AWS_REGION",
         "nodeSize": "r5.large",
         "nodeCount": 0,
-        "bootstrapUrl": "TBD_FIX_ME_KIRILL",
-        "ethereumChain": "mainnet",
-        "ethereumTopologyContractAddress": "TBD_FIX_ME_KIRILL",
         "cachePath": "./_terraform_beta",
-        "ethereumEndpoint": "$ETHEREUM_NODE_ADDRESS",
-        "incomingSshCidrBlocks": ["$YOUR_OFFICE_IP/32"]
+        "incomingSshCidrBlocks": ["$YOUR_OFFICE_IP/32"],
+    
+        "managementConfig": {
+            "orchestrator": {
+                "DynamicManagementConfig": {
+                    "Url": "http://localhost:7666/node/management",
+                    "ReadInterval": "1m",
+                    "ResetTimeout": "30m"
+                }
+            },
+            "services": {
+                "management-service": {
+                    "InternalPort": 8080,
+                    "ExternalPort": 7666,
+                    "DockerConfig": {
+                        "Image": "orbsnetwork/management-service",
+                        "Tag": "v1.1.0",
+                        "Pull": true
+                    },
+                    "Config": {
+                        "BootstrapMode": true,
+                        "EthereumEndpoint": "$ETHEREUM_NODE_ADDRESS",
+                        "DockerNamespace":"orbsnetwork"
+                    }
+                }
+            }
+        }
     }
 
 You will need:
