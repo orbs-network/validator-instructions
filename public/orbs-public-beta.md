@@ -187,6 +187,13 @@ Once the deployment finishes, the node will start the various Orbs node services
 ### How to inspect the network health
 [TBD_FIX_ME_KIRILL]
 
+Management service status - 
+http://[$NODE_AWS_IP]/services/management-service/status
+
+Boyar service status - 
+http://[$NODE_AWS_IP]/services/boyar/status
+
+
 __Congratulations!__
 
 ## Troubleshooting
