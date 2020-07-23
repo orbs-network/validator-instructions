@@ -95,9 +95,9 @@ The output of the key generator should be securely stored and used in the `orbs-
 
 To install Polygon run
 
-    npm install -g @orbs-network/orbs-polygon
+    npm install -g @orbs-network/polygon
 
-If you have previously installed Polygon and you are performing a new deploy, we recommend updating it by running `npm update -g @orbs-network/orbs-polygon`
+If you have previously installed Polygon and you are performing a new deploy, we recommend updating it by running `npm update -g @orbs-network/polygon`
 
 ### Create a dedicated folder
 
