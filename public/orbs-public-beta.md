@@ -109,9 +109,9 @@ Backup this folder upon completion of the instructions and do not delete it.
 
 ### Configure the boilerplate JSON file
 
-The thing to do next is to create the `orbs-beta-node.json` file and configure it as required for the new node.
+The thing to do next is to create the `orbs-node-beta.json` file and configure it as required for the new node.
 
-The content of the `orbs-beta-node.json` should be:
+The content of the `orbs-node-beta.json` should be:
 
     {
         "name": "$VALIDATOR_NAME-orbs-beta",
