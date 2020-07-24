@@ -124,7 +124,7 @@ The content of the `orbs-node-beta.json` should be:
         "nodeCount": 0,
         "cachePath": "./_terraform_beta",
         "incomingSshCidrBlocks": ["$YOUR_OFFICE_IP/32"],
-        "EthereumEndpoint": "$ETHEREUM_NODE_ADDRESS",
+        "ethereumEndpoint": "$ETHEREUM_NODE_ADDRESS",
         "managementConfig": {
             "orchestrator": {
                 "DynamicManagementConfig": {
