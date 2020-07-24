@@ -114,44 +114,44 @@ The thing to do next is to create the `orbs-node-beta.json` file and configure i
 The content of the `orbs-node-beta.json` should be:
 
     {
-        "name": "$VALIDATOR_NAME-orbs-beta",
-        "awsProfile": "default",
-        "sshPublicKey": "$LOCATION_TO_PUB_FILE",
-        "orbsAddress": "$ORBS_PUBLIC_NODE_ADDRESS",
-        "publicIp": "$NODE_AWS_IP",
-        "region": "$NODE_AWS_REGION",
-        "nodeSize": "m4.large",
-        "nodeCount": 0,
-        "cachePath": "./_terraform_beta",
-        "incomingSshCidrBlocks": ["$YOUR_OFFICE_IP/32"],
-        "EthereumEndpoint": "$ETHEREUM_NODE_ADDRESS",
-        "managementConfig": {
-            "orchestrator": {
-                "DynamicManagementConfig": {
-                    "Url": "http://localhost:7666/node/management",
-                    "ReadInterval": "1m",
-                    "ResetTimeout": "30m"
-                },
-                "storage-driver": "local",
-                "storage-mount-type": "bind"
-            },
-            "services": {
-                "management-service": {
-                    "InternalPort": 8080,
-                    "ExternalPort": 7666,
-                    "DockerConfig": {
-                        "Image": "orbsnetwork/management-service",
-                        "Tag": "v1.1.1",
-                        "Pull": true
-                    },
-                    "Config": {
-                        "BootstrapMode": true,
-                        "EthereumEndpoint": "$ETHEREUM_NODE_ADDRESS",
-                        "DockerNamespace":"orbsnetwork"
-                    }
-                }
-            }
-        }
+      "name": "",
+      "awsProfile": "default",
+      "sshPublicKey": "",
+      "orbsAddress": "",
+      "publicIp": "",
+      "region": "",
+      "nodeSize": "m4.large",
+      "nodeCount": 0,
+      "cachePath": "./_terraform_beta",
+      "incomingSshCidrBlocks": ["0.0.0.0/0"],
+      "ethereumEndpoint": "",
+      "managementConfig": {
+          "orchestrator": {
+              "DynamicManagementConfig": {
+                  "Url": "http://localhost:7666/node/management",
+                  "ReadInterval": "1m",
+                  "ResetTimeout": "30m"
+              },
+              "storage-driver": "local",
+              "storage-mount-type": "bind"
+          },
+          "services": {
+              "management-service": {
+                  "InternalPort": 8080,
+                  "ExternalPort": 7666,
+                  "DockerConfig": {
+                      "Image": "orbsnetwork/management-service",
+                      "Tag": "v1.1.1",
+                      "Pull": true
+                  },
+                  "Config": {
+                      "BootstrapMode": true,
+                      "EthereumEndpoint": "",
+                      "DockerNamespace":"orbsnetwork"
+                  }
+              }
+          }
+      }
     }
 
 You will need:
