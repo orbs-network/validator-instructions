@@ -120,18 +120,20 @@ The content of the `orbs-node-beta.json` should be:
         "orbsAddress": "$ORBS_PUBLIC_NODE_ADDRESS",
         "publicIp": "$NODE_AWS_IP",
         "region": "$NODE_AWS_REGION",
-        "nodeSize": "r5.large",
+        "nodeSize": "m4.large",
         "nodeCount": 0,
         "cachePath": "./_terraform_beta",
         "incomingSshCidrBlocks": ["$YOUR_OFFICE_IP/32"],
-    
+        "EthereumEndpoint": "$ETHEREUM_NODE_ADDRESS",
         "managementConfig": {
             "orchestrator": {
                 "DynamicManagementConfig": {
                     "Url": "http://localhost:7666/node/management",
                     "ReadInterval": "1m",
                     "ResetTimeout": "30m"
-                }
+                },
+                "storage-driver": "local",
+                "storage-mount-type": "bind"
             },
             "services": {
                 "management-service": {
@@ -139,7 +141,7 @@ The content of the `orbs-node-beta.json` should be:
                     "ExternalPort": 7666,
                     "DockerConfig": {
                         "Image": "orbsnetwork/management-service",
-                        "Tag": "v1.1.0",
+                        "Tag": "v1.1.1",
                         "Pull": true
                     },
                     "Config": {
