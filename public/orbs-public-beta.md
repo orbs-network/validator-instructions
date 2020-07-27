@@ -11,7 +11,7 @@ To complete this guide you will need the following set up:
 - Mac or Linux machine
 - An Ethereum Endpoint URL. [For the beta program you may use an Infura free tier account](infura_setup_free.md).
 - **A clean, new AWS account with admin programmatic access.**
-- AWS CLI - Install using `sudo brew install awscli` 
+- AWS CLI - Install using `brew install awscli` 
 - An Orbs Node Address. For details see [below](#orbs-node-address)
 - A Guardian (Wallet) Address
 - Metamask installed 
