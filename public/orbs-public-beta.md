@@ -9,7 +9,7 @@ This step-by-step guide will walk you through creating a new node and connecting
 To complete this guide you will need the following set up:
 
 - Mac or Linux machine
-- An Ethereum endpoint. For the beta program you may use an Infura free tier account.
+- An Ethereum Endpoint URL. [For the beta program you may use an Infura free tier account](infura_setup_free.md).
 - **A clean, new AWS account with admin programmatic access.**
 - AWS CLI - Install using `brew install awscli` 
 - An Orbs Node Address. For details see [below](#orbs-node-address)
@@ -57,7 +57,7 @@ To complete this guide you will need the following set up:
   Make sure it's installed by typing in:
   `terraform --version` - you should see the version printed out
 
-### Generating SSH public and private keys
+### Generate SSH public and private keys
 
 If you already have an ssh public key to use with your Orbs Node instaces, you may skip this step.
 
@@ -72,7 +72,7 @@ The gist of creating such a key is running:
     
 * -C "your_email@example.com" is an optional comment
 
-### Allocating an IP on Amazon
+### Allocate a static IP on Amazon
 
 The Orbs node that you provision must have a static IPs (Elastic IP) in order to communicate with the network.
 
@@ -84,15 +84,18 @@ The Node IP address and region will later be used in the node configuration file
 The IP will also be required during the [Guardian Registration phase](#registering-to-the-orbs-public-beta).
 
 
-### Orbs Node address
+### Allocate Orbs Node address and private key
+The Orbs Node address is a standard Ethereum Address. This address is used for (1) signing blocks on Orbs blockchain, and for (2) sending transactions to Orbs PoS smart contracts on Ethereum. Therefore, the Orbs node stores and uses the node address's private key. As such, the private key should be different from the Guardian private key.
 
-The Orbs Node address is a standard Ethereum Address. It's used for signing blocks on Orbs blockchain, and for sending transactions to Orbs PoS smart contracts on Ethreum. The Orbs Node address should hold enough ETH to fund the gas for transactions sent to the PoS contracts. It is advised to a balance of 0.5 - 1 ETH at any given time in the Orbs Node Address.
+During normal operation, Orbs node automatically sends transactions to the PoS smart contracts on Ethereum (e.g. to execute reward distribution or to signal that it is in sync with the network and ready to enter a committee). The Orbs Node address should hold enough ETH to fund the gas for transactions sent to the PoS contracts. It is the Operators responsibility to periodically verify the Orbs Node Address has a balance of 0.5 - 1 ETH.
 
-Orbs Node address and private key should be generated in a secure fashion and the private key should be securely stored and provided during node deployment, see below.
+Orbs Node address and private key should be generated in a secure fashion and the private key is provided during node deployment, see below.
 
-The Orbs Node address should also be provided during the [Guardian Registration phase](#registering-to-the-orbs-public-beta)
+The Orbs Node address is also provided during the [Guardian Registration phase](#registering-to-the-orbs-public-beta).
 
-The Orbs Node address, and it's private key should be securely stored. 
+The Orbs address may be modified, by updating the registration, prior to a node address change, the node should be teared-down and then redeployed.
+
+The Orbs Node address, and its private key should be securely stored.
 
 ### Install Polygon via NPM
 
@@ -167,17 +170,7 @@ Where:
 * `<ethereum endpoint url>` - a url to a working and synced Ethereum node. 
 * `<ssh source cird block>` - One or more CIDR blocks which will be granted access to ssh from into the node. You will still need the public key to connect - it is required only in cases of troubleshooting. The format is standard CIDR. Any IP not in the range will not be able to SSH to the node, even if it has the SSH key file. To allow ssh access from any ip use `"incomingSshCidrBlocks": ["0.0.0.0/0"],` 
 
-
-## Update Node configuration
-
-__Any modification to your configuration file MUST be done while the node is DOWN.__
-
-To update your node configuration
-* run polygon destroy
-* update your configuration JSON file to reflect your changes (for example add `"backend": true`)
-* run polygon create
-
-### Run Polygon CLI to deploy the node
+### Deploy the Node using Polygon CLI 
 
 Temporarily store the Orbs Node private key in a file `<orbs private key file>` __without the leading 0x__.
 Note, the private key should be a string of 64 characters, e.g. `f5f83Ee70a85fFF2exxxxxxxxxxxxxxxxxxxxxxxxxxx334932F34C8D629165Ed`.
@@ -204,12 +197,21 @@ After deployment make sure to backup and securely store the deployment folder da
 
 Do not leave sensitive data such as the `<orbs private key file>` in a non secure disk location
 
-### Registering to the Orbs public beta
+### Update Orbs Node configuration
+
+__Any modification to your configuration file MUST be done while the node is DOWN.__
+
+To update your node configuration
+1. run polygon destroy (e.g. `polygon destroy -f orbs-node-beta.json`)
+1. update your configuration JSON file as required
+1. run [polygon create](#deploy-the-node-using-polygon-cli)
+
+### Register your Guardian
 
 In order to register on the network, navigate to [Guardian Registration](https://guardians.orbs.network/registration)
 (Requires Metamask)
 
-### Verify your Node deployed correctly
+### Verify your Node is deployed correctly
 
 Check that all the services started without errors
 ```
