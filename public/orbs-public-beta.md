@@ -202,9 +202,9 @@ Do not leave sensitive data such as the `<orbs private key file>` in a non secur
 __Any modification to your configuration file MUST be done while the node is DOWN.__
 
 To update your node configuration
-1. run polygon destroy (`polygon destroy -f orbs-node-beta.json`)
+1. run polygon destroy (e.g. `polygon destroy -f orbs-node-beta.json`)
 1. update your configuration JSON file as required
-1. run [polygon create](#Deploy the Node using Polygon CLI)
+1. run [polygon create](#deploy-the-node-using-polygon-cli)
 
 ### Register your Guardian
 
