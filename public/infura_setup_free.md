@@ -49,9 +49,13 @@ To test your Ethereum Endpoint is active and functioning execute this command in
 ```bash
  curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["latest", false],"id":1}' [ETHEREUM_ENDPOINT_URL]
 ```
-The resulting output should be a JSON object. Inspect the attribute `"number"`. This value is a hexadecimal representation of the top block number in Ethereum blockchain. Verify it is close in value to the current top block in Ethereum to verify your Ethereum node is in sync with the network.
+The resulting output should be a JSON object. Verify there is no attirbute named `"Error"`. Additionally, you may inspect value of the attribute `"number"`. This value is a hexadecimal representation of the top block number in Ethereum blockchain. Verify your Ethereum node is in sync with the network by comparing this value to the current top block in Ethereum.
 
 #### Checking Secret protection 
 
-To verify you have correctly enabled secret protection repeat the test using the Endpoint URL obtained in the [first section](#creating-a-project-and-extracting-an-ehtereum-endpoint-url)
+To verify you have correctly enabled secret protection repeat the test using the Endpoint URL obtained in the [first section](#creating-a-project-and-extracting-an-ehtereum-endpoint-url) and see that your get this error message:
+
+```
+{"jsonrpc":"2.0","error":{"code":-32002,"message":"rejected due to project ID settings"}}
+```
 
