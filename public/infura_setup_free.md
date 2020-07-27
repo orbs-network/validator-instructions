@@ -23,8 +23,8 @@ If you are not interested in enabling secret protection for your Infura project 
 
 ### Enabling Secret protection (Optional)
 
-Your infura account is by default open to anyone with access to your Infura Project ID. This ID is not readily known but is also not kept secret. Since your free account has
-daily API request limits, you may choose to add a layer of protection to your API endpoint by requiring a secret to be included with each connection request.
+Infura places a limit on the number of daily API requests your free account provides. This quota is enough for supporting the API calls your Orbs Node generates.
+However, your Ethereum Endpoint URL may be used by anyone with access to your project ID. In order to block unauthorized use of this project, you may require attaching a secret key to all API requests served by this Infura project.
 
 To enable secret protection for your Ethereum Endpoint URL do the following:
 
@@ -41,11 +41,17 @@ _* note the `:` and `@` around your project secret should not be replaced_
 
 Use the secret protected version of the Ethereum Endpoint URL as your Ethereum Endpoint URL in Orbs Node deployment.
 
+Keep the secret-enriched URL and secure to protect your secret.
+
 ### Testing your Ethereum Endpoint URL:
 
 To test your Ethereum Endpoint is active and functioning execute this command in terminal (replacing [ETHEREUM_ENDPOINT_URL] with your url):
 ```bash
  curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["latest", false],"id":1}' [ETHEREUM_ENDPOINT_URL]
 ```
+The resulting output should be a JSON object. Inspect the attribute `"number"`. This value is a hexadecimal representation of the top block number in Ethereum blockchain. Verify it is close in value to the current top block in Ethereum to verify your Ethereum node is in sync with the network.
 
-The resulting output should be a JSON object. Inspect the attribute `"number"`. This value represents the top and verify it is close in value to the current top block in Ethereum
+#### Checking Secret protection 
+
+To verify you have correctly enabled secret protection repeat the test using the Endpoint URL obtained in the [first section](#creating-a-project-and-extracting-an-ehtereum-endpoint-url)
+
