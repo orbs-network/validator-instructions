@@ -1,4 +1,4 @@
-### Obtaining an Infura free account Ethereum Endpoint URL
+# Obtaining an Infura free account Ethereum Endpoint URL
 
 To create an Infura project for your Orbs Node Ethereum access, follow these instructions:
 
