@@ -9,7 +9,7 @@ This step-by-step guide will walk you through creating a new node and connecting
 To complete this guide you will need the following set up:
 
 - Mac or Linux machine
-- An Ethereum Endpoint URL. For the beta program you may use an [Infura free tier account](infura_setup_free.md).
+- An Ethereum Endpoint URL. For the beta program you may use an [Infura free tier account](infura-setup-free.md).
 - **A clean, new AWS account with admin programmatic access.**
 - AWS CLI - Install using `brew install awscli` 
 - An Orbs Node Address. For details see [below](#orbs-node-address)
@@ -147,7 +147,7 @@ The content of the `orbs-node-beta.json` should be:
                     "ExternalPort": 7666,
                     "DockerConfig": {
                         "Image": "orbsnetwork/management-service",
-                        "Tag": "v1.1.1",
+                        "Tag": "bootstrap",
                         "Pull": true
                     },
                     "Config": {
