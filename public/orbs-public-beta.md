@@ -81,7 +81,7 @@ The Orbs node that you provision must have a static IPs (Elastic IP) in order to
 - Allocate 1 Elastic IP
 
 The Node IP address and region will later be used in the node configuration file.
-The IP will also be required during the [Guardian Registration phase](#registering-to-the-orbs-public-beta).
+The IP will also be required during the [Guardian Registration phase](#register-your-guardian).
 
 
 ### Allocate Orbs Node address and private key
