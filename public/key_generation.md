@@ -9,18 +9,18 @@ One can create a new wallet using MyCrypto by choosing “Create New Wallet”.
 Note - the Orbs Node needs the private key to communicate with other nodes and send transactions to Ethereum. Thus, it is not possible to use Hardware Wallet for that purpose (as they do not reveal the private keys).
 
 
-![](../1_create.png)
+![](1_create.png)
 
 ## Retrieving the private key
 Access your wallet
 
-![](../2_access.png)
+![](2_access.png)
 
 Choose “Wallet Info” from the drop down menu
 
-![](../3_wallet_info.png)
+![](3_wallet_info.png)
 
 Reveal and copy the private key
 
-![](../4_key.png)
+![](4_key.png)
 
