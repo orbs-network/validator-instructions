@@ -20,7 +20,7 @@ Choose “Wallet Info” from the drop down menu
 
 ![](3_wallet_info.png)
 
-Reveal and copy the private key
 
+Reveal and copy the private key
 ![](4_key.png)
 
