@@ -91,7 +91,7 @@ During normal operation, Orbs node automatically sends transactions to the PoS s
 
 Orbs Node address and private key should be generated in a secure fashion and the private key is provided during node deployment, see below.
 
-The Orbs Node address is also provided during the [Guardian Registration phase](#registering-to-the-orbs-public-beta).
+The Orbs Node address is also provided during the [Guardian Registration phase](#register-your-guardian).
 
 The Orbs address may be modified, by updating the registration, prior to a node address change, the node should be teared-down and then redeployed.
 
