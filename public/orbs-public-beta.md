@@ -89,9 +89,9 @@ The Orbs Node address is a standard Ethereum Address. This address is used for (
 
 During normal operation, Orbs node automatically sends transactions to the PoS smart contracts on Ethereum (e.g. to execute reward distribution or to signal that it is in sync with the network and ready to enter a committee). The Orbs Node address should hold enough ETH to fund the gas for transactions sent to the PoS contracts. It is the Operators responsibility to periodically verify the Orbs Node Address has a balance of 0.5 - 1 ETH.
 
-Orbs Node address and private key should be generated in a secure fashion and the private key is provided during node deployment, see below.
+Orbs Node address and private key should be generated in a secure fashion and the private key is required during node deployment, see below.
 
-The Orbs Node address is also provided during the [Guardian Registration phase](#register-your-guardian).
+The Orbs Node address is also required during the [Guardian Registration phase](#register-your-guardian).
 
 The Orbs address may be modified, by updating the registration, prior to a node address change, the node should be teared-down and then redeployed.
 
