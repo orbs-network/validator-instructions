@@ -12,7 +12,7 @@ To complete this guide you will need the following set up:
 - An Ethereum Endpoint URL. For the beta program you may use an [Infura free tier account](infura-setup-free.md).
 - **A clean, new AWS account with admin programmatic access.**
 - AWS CLI - Install using `brew install awscli` 
-- An Orbs Node Address. For details see [below](#orbs-node-address)
+- An Orbs Node Address. For details see [below](#allocate-orbs-node-address-and-private-key)
 - A Guardian (Wallet) Address
 - Metamask installed 
 - An AWS credentials profile set correctly:
