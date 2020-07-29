@@ -2,7 +2,7 @@
 The Orbs Node requires a standard Ethereum wallet to communicate with other nodes and send transactions to Ethereum (such as automatic rewards distribution). The Guardian operating the node will need to load this address with ETH for proper function. 
 It is important to backup and securely store the private keys for this wallet. 
 
-This guide provide one possible way to generate an Ethereum wallet using MyCrypto.
+This guide provides one possible way to generate an Ethereum wallet using MyCrypto.
 
 ## Create a new wallet
 One can create a new wallet using MyCrypto by choosing “Create New Wallet”.
