@@ -97,6 +97,8 @@ The Orbs address may be modified, by updating the registration, prior to a node 
 
 The Orbs Node address, and its private key should be securely stored.
 
+If needed, see the following [key generation instructions](https://github.com/orbs-network/validator-instructions/blob/master/public/key_generation.md) to generate keys using MyCrypto.
+
 ### Install Polygon via NPM
 
 To install Polygon run
