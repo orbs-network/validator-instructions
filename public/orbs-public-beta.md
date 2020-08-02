@@ -197,7 +197,7 @@ Check that all the services started without errors
 http://<node ip>/services/boyar/status
 ```
 
-Check your node's status in the PoS network (readings are 10 minutes dalayed for finality)
+Check your node's status in the PoS network (readings are 10 minutes delayed for finality)
 ```
 http://<node ip>/services/management-service/status
 ```
