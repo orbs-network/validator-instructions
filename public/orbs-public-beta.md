@@ -30,9 +30,9 @@ To complete this guide you will need the following set up:
   Polygon currently supports the Terraform v0.12.23
 
   Use 
-        brew install tfenv
-        tfenv install 0.12.23
-        tfenv use 0.12.23
+        `brew install tfenv`
+        `tfenv install 0.12.23`
+        `tfenv use 0.12.23`
   to install Terraform
   
   Expected version `Terraform v0.12.23`, verify yours with `terraform -v`
