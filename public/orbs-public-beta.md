@@ -27,12 +27,15 @@ To complete this guide you will need the following set up:
 
 - [Terraform](https://www.terraform.io/downloads.html)
   
-  Polygon currently supports the latest Terraform (v0.12.x)
+  Polygon currently supports the Terraform v0.12.23
 
-  Use `brew install terraform` to install Terraform
+  Use 
+        brew install tfenv
+        tfenv install 0.12.23
+        tfenv use 0.12.23
+  to install Terraform
   
-  Make sure it's installed by typing in:
-  `terraform --version` - you should see the version printed out
+  Expected version `Terraform v0.12.23`, verify yours with `terraform -v`
 
 ### Generate SSH public and private keys
 
