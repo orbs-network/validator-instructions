@@ -4,14 +4,15 @@
 
 * A Linux machine with Docker Swarm
 * Boyar v1.1.1 [binary download](https://s3.amazonaws.com/orbs-network-releases/infrastructure/boyar/boyar-v1.1.1.bin)
-* Connection to Ethereum node (`$ETHEREUM_ENDPOINT` url)
+* Connection to Ethereum node (`<ETHEREUM_ENDPOINT>` url)
 * Directories `/var/efs`, `/var/efs/boyar-status` and `/var/efs/boyar-logs` should be created on the machine and have enough space (separate filesystem is recommended, you can use NFS if you like)
+* Orbs node address and orbs node private key. You can learn about key generation [here](https://github.com/orbs-network/validator-instructions/blob/master/public/orbs-public-beta.md#allocate-orbs-node-address-and-private-key).
 
 ## JSON configuration files
 
 ### `mgmt.json`
 
-You need to replace `$ETHEREUM_ENDPOINT` with a URL of a real Ethereum node (you can use Infura free tier or your own node).
+You need to replace `<ETHEREUM_ENDPOINT>` with a URL of a real Ethereum node (you can use [Infura free tier](https://github.com/orbs-network/validator-instructions/blob/master/public/infura-setup-free.md) or your own node).
 
 ```json
 {
@@ -30,12 +31,12 @@ You need to replace `$ETHEREUM_ENDPOINT` with a URL of a real Ethereum node (you
       "ExternalPort": 7666,
       "DockerConfig": {
         "Image": "orbsnetwork/management-service",
-        "Tag": "v1.1.1",
+        "Tag": "bootstrap",
         "Pull": true
       },
       "Config": {
         "BootstrapMode": true,
-        "EthereumEndpoint": "$ETHEREUM_ENDPOINT",
+        "EthereumEndpoint": "<ETHEREUM_ENDPOINT>",
         "DockerNamespace": "orbsnetwork"
       }
     }
@@ -45,12 +46,10 @@ You need to replace `$ETHEREUM_ENDPOINT` with a URL of a real Ethereum node (you
 
 ### `keys.json`
 
-You can use [Orbs key generator](https://github.com/orbs-network/orbs-key-generator) with `orbs-key-generator node` command.
-
 ```json
 {
-  "node-address": "$NODE_ADDRESS_WITH_NO_LEADING_0x",
-  "node-private-key": "$NODE_PRIVATE_KEY_WITN_NO_LEADING_0x"
+  "node-address": "<NODE_ADDRESS_WITH_NO_LEADING_0x>",
+  "node-private-key": "<NODE_PRIVATE_KEY_WITN_NO_LEADING_0x>"
 }
 ```
 
