@@ -3,7 +3,7 @@
 ## Prerequisites
 
 * A Linux machine with Docker Swarm
-* Boyar v1.1.1 [binary download](https://s3.amazonaws.com/orbs-network-releases/infrastructure/boyar/boyar-v1.1.1.bin)
+* Boyar v1.4.0 [binary download](https://s3.amazonaws.com/orbs-network-releases/infrastructure/boyar/boyar-v1.4.0.bin)
 * Connection to Ethereum node (`<ETHEREUM_ENDPOINT>` url)
 * Directories `/var/efs`, `/var/efs/boyar-status` and `/var/efs/boyar-logs` should be created on the machine and have enough space (separate filesystem is recommended, you can use NFS if you like)
 * Orbs node address and orbs node private key. You can learn about key generation [here](https://github.com/orbs-network/validator-instructions/blob/master/public/orbs-public-beta.md#allocate-orbs-node-address-and-private-key).
