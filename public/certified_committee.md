@@ -18,6 +18,9 @@ To participate in the Certified Committee, a Guardian should provide a URL to a 
  - Contact info - email address
  - Short bio/intro
  - Location of Servers (such as AWS region, if the node is deployed on AWS)
+ 
+The details should be provided in English. A Guardian may choose to provide the details in languages other than English, in addition to the English version.
 
 The Guardian should provide the URL through the [Guardian Registration interface](https://guardians.orbs.network/registration) -> Guardian Details URL.
+
 It is recommended to place the Details page on the Guardian website. 
