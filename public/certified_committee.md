@@ -9,13 +9,14 @@ The first and main committee is the General committee. The General committee com
 In contrast, the Certified committee includes only Guardians who meet certain requirements and have undergone a certification process that includes providing certain identification documents. The Certified committee provides a suitable solution for enterprises with regulatory restrictions that are interested in running applications on a blockchain. Enterprises may also choose initially to use the Certified committee to reduce friction and transition to the General committee over time.
 
 ## Certified Committee registration
-To participate in the Certified Committee, a Guardian should provide, in the Guardian registration process, a URL to a page that includes the following details:
+To participate in the Certified Committee, a Guardian should provide a URL to a page that includes the following details (note, that this URL will be publicly accessible):
 
- - Company name
- - Company ID
+ - Company name / Individual name (for non-incorporated Guardians)
  - Country
- - Company address
+ - Mailing address 
  - Contact person name
  - Contact info - email address
  - Short bio/intro
  - Location of Servers (such as AWS region, if the node is deployed on AWS)
+
+The Guardian should provide the URL through the [Guardian Registration interface] (https://guardians.orbs.network/registration) -> Guardian Details URL.
