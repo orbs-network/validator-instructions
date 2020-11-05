@@ -19,4 +19,4 @@ To participate in the Certified Committee, a Guardian should provide a URL to a 
  - Short bio/intro
  - Location of Servers (such as AWS region, if the node is deployed on AWS)
 
-The Guardian should provide the URL through the [Guardian Registration interface] (https://guardians.orbs.network/registration) -> Guardian Details URL.
+The Guardian should provide the URL through the [Guardian Registration interface](https://guardians.orbs.network/registration) -> Guardian Details URL.
