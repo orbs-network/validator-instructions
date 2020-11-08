@@ -119,6 +119,7 @@ The content of the `orbs-node-beta.json` should be:
         "nodeCount": 0,
         "cachePath": "./_terraform_beta",
         "incomingSshCidrBlocks": ["<ssh source cird block>",...],
+        "boyarAutoUpdate": true,
         "managementConfig": {
             "orchestrator": {
                 "DynamicManagementConfig": {
