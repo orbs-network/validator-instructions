@@ -3,7 +3,7 @@
 ## Prerequisites
 
 * A Linux machine with Docker Swarm
-* Boyar v1.4.0 [binary download](https://s3.amazonaws.com/orbs-network-releases/infrastructure/boyar/boyar-v1.4.0.bin)
+* Boyar [binary download](https://github.com/orbs-network/boyarin/releases)
 * Connection to Ethereum node (`<ETHEREUM_ENDPOINT>` url)
 * Directories `/var/efs`, `/var/efs/boyar-status` and `/var/efs/boyar-logs` should be created on the machine and have enough space (separate filesystem is recommended, you can use NFS if you like)
 * Orbs node address and orbs node private key. You can learn about key generation [here](https://github.com/orbs-network/validator-instructions/blob/master/public/orbs-public-beta.md#allocate-orbs-node-address-and-private-key).
@@ -59,8 +59,10 @@ You need to replace `<ETHEREUM_ENDPOINT>` with a URL of a real Ethereum node (yo
 
 ```bash
 mkdir -p /var/efs/ /var/efs/boyar-status /var/efs/boyar-logs
-boyar --keys ./keys.json --management-config ./mgmt.json --log /var/efs/boyar-logs/current --status /var/efs/boyar-status/status.json
+boyar --keys ./keys.json --management-config ./mgmt.json --log /var/efs/boyar-logs/current --status /var/efs/boyar-status/status.json --bootstrap-reset-timeout 30m --auto-update --shutdown-after-update
 ```
+
+It is recommended to use some external process manager, for exampls, [Supervisord](https://github.com/Supervisor/supervisor).
 
 ## Verifying your node's health
 
