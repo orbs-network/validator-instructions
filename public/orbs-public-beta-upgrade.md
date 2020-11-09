@@ -7,7 +7,7 @@ Instructions are valid for 8 November 2020.
 1) upgrade polygon to the latest version: `npm install -g @orbs-network/polygon@1.28.0`
 2) add `"boyarAutoUpdate": true` to your `node.json` file
 3) destroy the node (no additional actions necessary): `polygon destroy -f node.json`
-4) provision a new node: `nebula create -f node.json --orbs-private-key $(cat path/to/orbs-private-key.txt)`
+4) provision a new node: `polygon create -f node.json --orbs-private-key $(cat path/to/orbs-private-key.txt)`
 
 Please note that `boyarAutoUpdate` will allow automatic update of our orchestrator software, Boyar, that manages virtual chains and other node services.
 
