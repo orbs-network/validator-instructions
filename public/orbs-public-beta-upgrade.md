@@ -13,6 +13,7 @@ Please note that `boyarAutoUpdate` will allow automatic update of our orchestrat
 
 ## Own infrastructure
 
+0) **remove all the containers**: `docker service rm $(docker service ls -q)`
 1) upgrade Boyar to the latest version: https://github.com/orbs-network/boyarin/releases
 2) add `--auto-update --shutdown-after-update --bootstrap-reset-timeout 30m` to your boyar parameters
 3) run boyar: `boyar --keys ./keys.json --management-config ./mgmt.json --log /var/efs/boyar-logs/current --status /var/efs/boyar-status/status.json --bootstrap-reset-timeout 30m --auto-update --shutdown-after-update`
