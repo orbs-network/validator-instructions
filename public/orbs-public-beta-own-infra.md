@@ -6,7 +6,7 @@
 * Boyar [binary download](https://github.com/orbs-network/boyarin/releases)
 * Connection to Ethereum node (`<ETHEREUM_ENDPOINT>` url)
 * Directories `/var/efs`, `/var/efs/boyar-status` and `/var/efs/boyar-logs` should be created on the machine and have enough space (separate filesystem is recommended, you can use NFS if you like)
-* Orbs node address and orbs node private key. You can learn about key generation [here](https://github.com/orbs-network/validator-instructions/blob/master/public/orbs-public-beta.md#allocate-orbs-node-address-and-private-key).
+* Orbs node address and orbs node private key. You can learn about key generation [here](https://github.com/orbs-network/validator-instructions/blob/master/public/orbs-public-blockchain.md#allocate-orbs-node-address-and-private-key).
 
 ## JSON configuration files
 

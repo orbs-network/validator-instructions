@@ -9,7 +9,7 @@ This step-by-step guide will walk you through creating a new node and connecting
 To complete this guide you will need the following set up:
 
 - Mac or Linux machine
-- An Ethereum Endpoint URL. For the beta program you may use an [Infura free tier account](infura-setup-free.md).
+- An Ethereum Endpoint URL. You may use an [Infura free tier account](infura-setup-free.md).
 - **A clean, new AWS account with admin programmatic access.**
   - If you are already participating in Orbs v1 and have deployed a Validator node, you may use the same AWS account
 - AWS CLI - Install using `brew install awscli` 
@@ -95,7 +95,7 @@ If you have previously installed Polygon and you are performing a new deployment
 
 ### Create a dedicated deployment folder
 
-Create a dedicated folder for your deployment. For example, "orbs-v2-beta".
+Create a dedicated folder for your deployment. For example, "orbs-v2".
 This folder will hold config files, logs and the artifacts for future needs (such as 'destroy'). 
 
 __Backup this folder upon completion of the instructions and DO NOT delete it.__
@@ -104,9 +104,9 @@ Change your working path to the deployment folder and proceed with the instructi
 
 ### Configure the boilerplate JSON file
 
-Create a config file `orbs-node-beta.json` for your deployment in .
+Create a config file `orbs-node.json` for your deployment in .
 
-The content of the `orbs-node-beta.json` should be:
+The content of the `orbs-node.json` should be:
 
     {
         "name": "<orbs node name>",
@@ -117,7 +117,7 @@ The content of the `orbs-node-beta.json` should be:
         "publicIp": "<node ip>",
         "nodeSize": "r5.large",
         "nodeCount": 0,
-        "cachePath": "./_terraform_beta",
+        "cachePath": "./_terraform",
         "incomingSshCidrBlocks": ["<ssh source cird block>",...],
         "boyarAutoUpdate": true,
         "managementConfig": {
@@ -166,7 +166,7 @@ Note, the private key should be a string of 64 characters, e.g. `f5f83Ee70a85fFF
 
 To deploy the node run:
 
-    polygon create -f orbs-node-beta.json --orbs-private-key $(cat <orbs private key file>)
+    polygon create -f orbs-node.json --orbs-private-key $(cat <orbs private key file>)
 
 After ensuring the private key is stored in a secure place, delete the temporary private key file `<orbs private key file>`
 
@@ -174,7 +174,7 @@ During node creation, Terraform cache files will be created in the folder define
 
 If needed, the command to remove all resources provisioned for the node is:
            
-    polygon destroy -f orbs-node-beta.json
+    polygon destroy -f orbs-node.json
     
 ### IMPORTANT! ###
 
@@ -182,7 +182,7 @@ After deployment make sure to backup and securely store the deployment folder da
 
 * __Orbs keys__ (`<orbs private key file>` and any other credentials you used and configured, such as SSH keys)
 * _terraform cache folder - is required to destroy or redeploy the node
-* The `orbs-node-beta.json` file
+* The `orbs-node.json` file
 
 Do not leave sensitive data such as the `<orbs private key file>` in an unsecure disk location.
 
@@ -191,7 +191,7 @@ Do not leave sensitive data such as the `<orbs private key file>` in an unsecure
 __Any modification to your configuration file MUST be done while the node is DOWN.__
 
 To update your node configuration
-1. run polygon destroy (e.g. `polygon destroy -f orbs-node-beta.json`)
+1. run polygon destroy (e.g. `polygon destroy -f orbs-node.json`)
 1. update your configuration JSON file as required
 1. run [polygon create](#deploy-the-node-using-polygon-cli)
 
@@ -217,7 +217,7 @@ __Congratulations!__
 
 ## Troubleshooting
 
-1. If you get an Terraform error that your IP does not exist, check whether the combination of ip and region is correct in the node configuration file (`orbs-node-beta.json`)
+1. If you get an Terraform error that your IP does not exist, check whether the combination of ip and region is correct in the node configuration file (`orbs-node.json`)
 
 2. If the metrics page does not respond, it could be that the Ethereum node did not finish syncing - this takes several hours.
 

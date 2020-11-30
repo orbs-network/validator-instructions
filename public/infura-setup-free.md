@@ -12,7 +12,7 @@ If you already have an account, sign in.
 
 1. Click the _ETHEREUM_ logo and link, second from the top on the lefthand side navigation bar.
 
-1. Click _CREATE A PROJECT_, and give your beta project a name (e.g. orbs-node-beta). Then click _CREATE_
+1. Click _CREATE A PROJECT_, and give your project a name (e.g. orbs-node). Then click _CREATE_
 
 You have successfully created an Infura free account and project. You should now be looking at the _SETTINGS_ page of your new project.
 

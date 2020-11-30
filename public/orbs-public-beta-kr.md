@@ -10,7 +10,7 @@
 가이드대로 하려면 아래 사항들을 먼저 확인하고 준비해야합니다:
 
 - PC - 맥(Mac) 또는 리눅스 (본 가이드는 Mac을 기준으로 작성하였으므로 가능하면 Mac 환경 권장)
-- 이더리움 Endpoint URL. Beta에서는 [Infura 무료 계정](infura-setup-free.md)을 이용할 수 있습니다.
+- 이더리움 Endpoint URL. 에서는 [Infura 무료 계정](infura-setup-free.md)을 이용할 수 있습니다.
 - **새로운 AWS 계정**
   - V1 노드가 운영중이라면 같은 AWS 계정을 사용해도 괜찮습니다
 - AWS client 설치 - `brew install awscli` 명령을 통해 PC에 설치할 수 있습니다
@@ -102,21 +102,21 @@ Orbs 노드 주소는 표준 이더리움 주소를 사용합니다. 이 주소�
 
 ### 노드 설치를 위한 폴더 만들기
 
-다른 파일들과 섞이지 않도록 노드 설정을 저장할 폴더를 따로 만들어주세요(폴더명 예시: "orbs-v2-beta"). 이 폴더에는 설정파일과 로그, 향후 노드 제거시 필요한 데이터가 기록됩니다.
+다른 파일들과 섞이지 않도록 노드 설정을 저장할 폴더를 따로 만들어주세요(폴더명 예시: "orbs-v2"). 이 폴더에는 설정파일과 로그, 향후 노드 제거시 필요한 데이터가 기록됩니다.
 
-    mkdir orbs-v2-beta
+    mkdir orbs-v2
 
 __이 폴더는 설치가 완료되더라도 삭제하면 안되며, 다른 곳에 복사해서 백업해 두십시오.__
 
 새로 만든 폴더로 이동하여 아래 순서를 계속 진행해주세요.
 
-    cd orbs-v2-beta
+    cd orbs-v2
 
 ### 설치를 위한 JSON 파일 생성, 설정하기
 
-폴더 안에 `orbs-node-beta.json` 파일을 새로 만들어주세요.
+폴더 안에 `orbs-node.json` 파일을 새로 만들어주세요.
 
-`orbs-node-beta.json`파일의 내용은 다음과 같습니다:
+`orbs-node.json`파일의 내용은 다음과 같습니다:
 
     {
         "name": "노드이름(영문으로)",
@@ -127,7 +127,7 @@ __이 폴더는 설치가 완료되더라도 삭제하면 안되며, 다른 곳�
         "publicIp": "노드 IP 주소",
         "nodeSize": "r5.large",
         "nodeCount": 0,
-        "cachePath": "./_terraform_beta",
+        "cachePath": "./_terraform",
         "incomingSshCidrBlocks": ["ssh 접근제한 설정",...],
         "managementConfig": {
             "orchestrator": {
@@ -175,7 +175,7 @@ __이 폴더는 설치가 완료되더라도 삭제하면 안되며, 다른 곳�
 준비가 다 되었으면 아래 명령어로 노드 설치를 시작합니다:
 (위에서 진행시 파일명을 다르게 만들었다면 아래 명령어에서 해당 파일명에 맞게 수정입력해주세요)
 
-    polygon create -f orbs-node-beta.json --orbs-private-key $(cat privatekey)
+    polygon create -f orbs-node.json --orbs-private-key $(cat privatekey)
 
 프라이빗 키는 노출되지 않도록 안전한 곳에 별도로 보관해주시고, 위에서 임시로 사용한 `privatekey` 파일은 설치가 완료되면 삭제해주세요.
 
@@ -183,7 +183,7 @@ __이 폴더는 설치가 완료되더라도 삭제하면 안되며, 다른 곳�
 
 필요시, 노드를 제거하고 모든 aws 리소스를 해제하는 명령어는 다음과 같습니다:
          
-    polygon destroy -f orbs-node-beta.json
+    polygon destroy -f orbs-node.json
     
 ### 꼭 확인해야할 중요 내용! ###
 
@@ -194,7 +194,7 @@ After deployment make sure to backup and securely store the deployment folder da
 
 * _terraform 캐시 폴더 - 향후 노드 제거 및 재설치시 필요
 
-* `orbs-node-beta.json` 파일
+* `orbs-node.json` 파일
 
 특히 프라이빗 키와 같은 데이터는 일반 폴더등 안전하지 않은 곳에 남겨두면 안됩니다.
 
@@ -204,7 +204,7 @@ __노드 설정을 변경하는 경우에는 반드시 노드가 제거되고 �
 
 노드 설정을 업데이트하는 방법
 
-1. polygon destroy 명령어 노드 제거 실행 `polygon destroy -f orbs-node-beta.json`
+1. polygon destroy 명령어 노드 제거 실행 `polygon destroy -f orbs-node.json`
 2. JSON 파일 수정 (수정할 항목 변경)
 3. polygon create 명령어로 다시 설치실행 ([설치항목](#Polygon-CLI를-이용하여-노드-설치하기))
 
