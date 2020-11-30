@@ -1,4 +1,4 @@
-# Setting up an Orbs Public Blockchain Node using Nebula CLI
+# Setting up an Orbs Public Blockchain Node using Polygon CLI
 
 This step-by-step guide will walk you through creating a new node and connecting it to an existing Orbs network.
 
@@ -9,60 +9,43 @@ This step-by-step guide will walk you through creating a new node and connecting
 To complete this guide you will need the following set up:
 
 - Mac or Linux machine
-- An SSH public key (by default we use `~/.ssh/id_rsa.pub`). We go into details on how to generate it below
+- An Ethereum Endpoint URL. For the beta program you may use an [Infura free tier account](infura-setup-free.md).
 - **A clean, new AWS account with admin programmatic access.**
-- AWS CLI
-  
-  Use `brew install awscli` to get it installed
+  - If you are already participating in Orbs v1 and have deployed a Validator node, you may use the same AWS account
+- AWS CLI - Install using `brew install awscli` 
+- An Orbs Node Address. For details see [below](#allocate-orbs-node-address-and-private-key)
+- A Guardian (Wallet) Address
+- Metamask installed 
 - An AWS credentials profile set correctly:
   
-  See more [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
+  For a simple setup of the "default" profile run `aws configure`. For additional options see [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
   
-  We require the `aws_access_key_id` and `aws_secret_access_key` of an admin account for our Terraform script to execute correctly 
+  Admin privileges for your AWS account should be configured in the specified profile. 
 - [Node.js](https://nodejs.org/en/) version 8 or above
   
-  Use `brew install node` to get it installed
+  Use `brew install node` to install Node.js
 
 - [Terraform](https://www.terraform.io/downloads.html)
   
-  Nebula currently supports the latest Terraform (v0.12.x) and have been tested on version v0.12.23
-  for most scenarios. We recommend installating this specific version to have a fail-proof experience.
+  Polygon currently supports the Terraform v0.12.23
 
-  For macOS:
+  Use
+  
+  `brew install tfenv`
+  
+  `tfenv install 0.12.23`
+  
+  `tfenv use 0.12.23`
+  
+  to install Terraform
+  
+  Expected version `Terraform v0.12.23`, verify yours with `terraform -v`
 
-  Download Terraform by running this command in your Terminal:
-  `wget https://releases.hashicorp.com/terraform/0.12.23/terraform_0.12.23_darwin_amd64.zip`
+### Generate SSH public and private keys
 
-  Then unzip it:
-  `unzip terraform_0.12.23_darwin_amd64.zip`
+If you already have an ssh public key to use with your Orbs Node instaces, you may skip this step.
 
-  Grant it executable permissions:
-  `chmod +x terraform && sudo mv terraform /usr/local/bin/`
-
-  Make sure it's installed by typing in:
-  `terraform --version` - you should see the version printed out
-
-  For Linux:
-
-  Download Terraform by running this command in your Terminal:
-  `curl -O https://releases.hashicorp.com/terraform/0.12.23/terraform_0.12.23_darwin_amd64.zip`
-
-  Then unzip it: (If unzip is not installed, install it by running `apt-get install unzip`)
-  `unzip terraform_0.12.23_darwin_amd64.zip`
-
-  Grant it executable permissions:
-  `chmod +x terraform && sudo mv terraform /usr/local/bin/`
-
-  Make sure it's installed by typing in:
-  `terraform --version` - you should see the version printed out
-
-- [Orbs Key Generator](https://www.github.com/orbs-network/orbs-key-generator)
-
-  Use `brew install orbs-network/devtools/orbs-key-generator` to get it installed (requires a Mac)
-
-### Generating SSH public and private keys
-
-We require a valid public/private keys to run our deployment scripts and set up the EC2 resources. The key file should remain secret with the exception of feeding it to the configuration during setup. (providing the path for the pub file in the `orbs-node.json` setup file as described below)
+A valid public/private keypair is needed to run the deployment scripts and set up the EC2 resources. The key file should remain secret with the exception of feeding it to the configuration during setup (providing the path for the pub file in the `orbs-node.json` setup file as described below)
 
 The generated key should __not__ have a passphrase.
 It is okay to generate a key by any means, such as based on the following tutorial by [GitHub](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/)
@@ -70,148 +53,174 @@ It is okay to generate a key by any means, such as based on the following tutori
 The gist of creating such a key is running:
 
     ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+    
+* -C "your_email@example.com" is an optional comment
 
-### Allocating an IP on Amazon
+### Allocate a static IP on Amazon
 
-The Orbs node that you provision must have a static IPs in order to communicate with the network.
+The Orbs node that you provision must have a static IPs (Elastic IP) in order to communicate with the network.
 
 - Go to your AWS Console
-- Pick a region (for example `ca-central-1`)
-- Allocate 1 Elastic IPs
+- Pick a region for your node deployment (for example `ca-central-1`)
+- Allocate 1 Elastic IP
 
-That IP address and region will later be used in the node configuration file.
+The Node IP address and region will later be used in the node configuration file.
+The IP will also be required during the [Guardian Registration phase](#register-your-guardian).
 
 
-### Generating Orbs addresses
+### Allocate Orbs Node address and private key
+The Orbs Node address is a standard Ethereum Address. This address is used for (1) signing blocks on the Orbs network, and for (2) sending transactions to Orbs PoS smart contracts on Ethereum. Therefore, the Orbs node stores and uses the node address's private key. As such, the private key should be different from the Guardian private key.
 
-An Orbs node is identified by a public key and any action of the node should be signed with the corresponding private key. 
-These keys should be generated in a secure fashion and the private key should be securely stored. 
+During normal operation, Orbs node automatically sends transactions to the PoS smart contracts on Ethereum (e.g. to execute reward distribution or to signal that it is in sync with the network and ready to enter a committee). The Orbs Node address should hold enough ETH to fund the gas for transactions sent to the PoS contracts. It is the Guardian's responsibility to periodically verify the Orbs node address has a balance of at least 0.5 ETH.
 
-We require an Orbs private key and an Orbs address. These can be generated using the [Orbs key generator](https://github.com/orbs-network/orbs-key-generator) by running `orbs-key-generator node`
+Note - To complete registration, the Orbs node address is required to start with at least 1 ETH.
 
-The output of the key generator should be securely stored and used in the `orbs-node.json` configuration file and node deployment command as explained below. You will need the `NodeAddress` and `NodePrivateKey` later on __without the leading 0x__.
+Orbs Node address and private key should be generated in a secure fashion and the private key is required during node deployment (see below).
 
-### Install Nebula via NPM
+The Orbs Node address is also required during the [Guardian Registration phase](#register-your-guardian).
 
-To install Nebula run
+The Orbs address may be modified, by updating the registration. Prior to a node address change, the node should be teared-down and redeployed.
 
-    npm install -g @orbs-network/orbs-nebula
+The Orbs Node private key should be securely stored.
 
-If you have previously installed Nebula and you are performing a new deploy, we recommend updating it by running `npm update -g @orbs-network/orbs-nebula`
+If needed, see the following [key generation instructions](https://github.com/orbs-network/validator-instructions/blob/master/public/key_generation.md) to generate keys using MyCrypto.
+
+### Install Polygon via NPM
+
+To install Polygon run
+
+    npm install -g @orbs-network/polygon
+
+If you have previously installed Polygon and you are performing a new deployment, we recommend updating it by running `npm update -g @orbs-network/polygon`
+
+### Create a dedicated deployment folder
+
+Create a dedicated folder for your deployment. For example, "orbs-v2-beta".
+This folder will hold config files, logs and the artifacts for future needs (such as 'destroy'). 
+
+__Backup this folder upon completion of the instructions and DO NOT delete it.__
+
+Change your working path to the deployment folder and proceed with the instructions below.
 
 ### Configure the boilerplate JSON file
 
-The thing to do next is to create the `orbs-node.json` file and configure it as required for the new node.
+Create a config file `orbs-node-beta.json` for your deployment in .
 
-The content of the `orbs-node.json` should be:
+The content of the `orbs-node-beta.json` should be:
 
     {
-        "name": "$VALIDATOR_NAME-orbs-prod",
-        "awsProfile": "default",
-        "sshPublicKey": "$LOCATION_TO_PUB_FILE",
-        "orbsAddress": "$ORBS_PUBLIC_NODE_ADDRESS",
-        "publicIp": "$NODE_AWS_IP",
-        "backend": true,
-        "ephemeralStorage": false,
-        "region": "$NODE_AWS_REGION",
-        "nodeSize": "m4.xlarge",
-        "nodeCount": 1,
-        "bootstrapUrl": "https://s3.amazonaws.com/orbs-bootstrap-prod/boyar/config.json",
-        "ethereumChain": "mainnet",
-        "ethereumTopologyContractAddress": "0x804c8336846d8206c95CEe24752D514210B5a240",
-        "cachePath": "./_terraform",
-        "ethereumEndpoint": "$ETHEREUM_NODE_ADDRESS",
-        "incomingSshCidrBlocks": ["$YOUR_OFFICE_IP/32"]
+        "name": "<orbs node name>",
+        "awsProfile": "<aws profile>",
+        "sshPublicKey": "<ssh access public key file>",
+        "orbsAddress": "<orbs node ethereum address>",
+        "region": "<aws region>",
+        "publicIp": "<node ip>",
+        "nodeSize": "r5.large",
+        "nodeCount": 0,
+        "cachePath": "./_terraform_beta",
+        "incomingSshCidrBlocks": ["<ssh source cird block>",...],
+        "boyarAutoUpdate": true,
+        "managementConfig": {
+            "orchestrator": {
+                "DynamicManagementConfig": {
+                    "Url": "http://localhost:7666/node/management",
+                    "ReadInterval": "1m",
+                    "ResetTimeout": "30m"
+                },
+                "storage-driver": "local",
+                "storage-mount-type": "bind"
+            },
+            "services": {
+                "management-service": {
+                    "InternalPort": 8080,
+                    "ExternalPort": 7666,
+                    "DockerConfig": {
+                        "Image": "orbsnetwork/management-service",
+                        "Tag": "bootstrap",
+                        "Pull": true
+                    },
+                    "Config": {
+                        "BootstrapMode": true,
+                        "EthereumEndpoint": "<ethereum endpoint url>",
+                        "DockerNamespace":"orbsnetwork"
+                    }
+                }
+            }
+        }
     }
 
-You will need:
-* $VALIDATOR_NAME-orbs-node - Name for your Validator name, such as a company name or brand name.
-* $LOCATION_TO_PUB_FILE - The SSH public and private key file path (the generated pub file)
-* $ORBS_PUBLIC_NODE_ADDRESS - The Orbs node address (from the Orbs key generator - __without the leading 0x__)
-* $NODE_AWS_IP - The IP address (from AWS)
-* Backend is a new feature that allows you to securely store your Terraform state created by Nebula into your AWS account. (Into a designated S3 bucket) Making it easy to share with other DevOps personel in your company, or aid in recovery or migration of your Nebula deployment between computers. For example, create a node from one laptop, and still be able to destroy or upgrade it from a completely different one. Terraform knows how to sync the state into the S3 bucket between all users / usages of it automatically and also brings to the plate a feature rich provisioning state lock to prevent from 2 people trying to alter your Orbs node in the same exact time.
-* $NODE_AWS_REGION - The AWS region (from AWS)
-* $ETHEREUM_NODE_ADDRESS - this parameter is _optional_, used to configure an external Ethereum node. If the parameter is not included, an internal Ethereum node will be used. If you have your own synced Ethereum node, you can use it as a value for ethereumEndpoint. Alternatively, you can use "http://eth.orbs.com" , which we provide for your convenience (configure it by writing "ethereumEndpoint": "http://eth.orbs.com"). Our long term goal is to use the Ethereum node that is internal to the Orbs node. 
-* $YOUR_OFFICE_IP - This is the IP address/range that we will grant access to for ssh connections to the node, you will still need the public key to connect - it is required only in cases of troubleshooting. The format is standard CIDR so a range may be provided by changing the mask. Any IP not in the range will not be able to SSH to the node, even if it has the SSH key file.
+Where:
+* `<orbs node name>` - Will be used with some AWS resource names as prefix or suffix to uniquely identify node resources. Must be S3 bucket name complient (e.g. no _...)
+* `<aws profile>` - use "default", or, if you are using AWS profiles with more than one AWS account, an AWS profile name with pre-configured AWS credentials and account for your account.
+* `<ssh access public key file>` - The SSH public key filename (if omitted, defaults to `~/.ssh/id_rsa.pub`)
+* `<orbs node ethereum address>` - The Orbs Node Ethereum address, EIP-55 compliant with checksum capitalization __but without the leading '0x'__
+* `<aws region>` - An AWS region name. The new node will be provisioned in this region. e.g. `ca-central-1`
+* `<node ip>` - A static IP address where this Orbs Node will be reachable. Must be a valid Elastic IP allocated and unattached in the selected region.
+* `<ethereum endpoint url>` - a URL to a working and synced Ethereum node. 
+* `<ssh source cird block>` - One or more CIDR blocks which will be granted access to ssh from into the node. You will still need the public key to connect - it is required only in cases of troubleshooting. The format is standard CIDR. Any IP not in the range will not be able to SSH to the node, even if it has the SSH key file. To allow ssh access from any ip use `"incomingSshCidrBlocks": ["0.0.0.0/0"],` 
 
-Other parameters (no need to change them):
+### Deploy the Node using Polygon CLI 
 
-The `cachePath` configuration tells nebula where to store the terraform installation meta-data created during the deploy stage. It is required in cases where you wish to remove the node from AWS. You should store these files and back them up so you can run maintenance if required.
+Temporarily store the Orbs Node private key in a file `<orbs private key file>` __without the leading 0x__.
+Note, the private key should be a string of 64 characters, e.g. `f5f83Ee70a85fFF2exxxxxxxxxxxxxxxxxxxxxxxxxxx334932F34C8D629165Ed`.
 
-The `awsProfile` configuration can be changed if you are using multiple aws configurations and want a specific one to be applied.
+To deploy the node run:
 
-The `ephemeralStorage` option (default value: `false`) provides an ability to make the provisioned EFS disk for block storage become ephemeral meaning it will be 
-destroyed upon destroying the node. (aka nebula destroy) 
-this is usually not preferred by validators unless you wish to re-sync the entire storage on every node upgrade/maintenance.
+    polygon create -f orbs-node-beta.json --orbs-private-key $(cat <orbs private key file>)
 
-## Some warning as to updating your node configuration JSON file
-While the configuration is quite easily changeable, please do remember that any modification to your configuration file MUST be done while the node is DOWN.
-For example: if you decide you want to set a backend syncing using the Terraform state syncing to S3 (Just as an example). 
-You should do the following to perform the change:
-* run nebula destroy
-* update your configuration JSON file to reflect your changes (for example add `"backend": true`)
-* run nebula create
+After ensuring the private key is stored in a secure place, delete the temporary private key file `<orbs private key file>`
 
-### Run Nebula CLI to deploy the node
-
-To avoid having the orbs node private key as part of your command history, we recommend creating a file called `orbs-private-key.txt` and put the orbs node private key inside it, __without the leading 0x__.
-That key was generated by the key generator and should be in a hex string of size 64 characters, like `f5f83Ee70a85fFF2exxxxxxxxxxxxxxxxxxxxxxxxxxx334932F34C8D629165Ed`.
-
-To provision the resources required for the node:
-
-    nebula create -f orbs-node.json --orbs-private-key $(cat path/to/orbs-private-key.txt)
-
-Terraform files corresponding to nodes can be found in the folder defined in `cachePath` and should be backed up.
+During node creation, Terraform cache files will be created in the folder defined in `cachePath` - these should be backed up to allow proper cleanup at a later stage.
 
 If needed, the command to remove all resources provisioned for the node is:
            
-    nebula destroy -f orbs-node.json
+    polygon destroy -f orbs-node-beta.json
     
 ### IMPORTANT! ###
-After deployment make sure to backup and securely store - 
-1. __Orbs keys__ (and any other credentials you used and configured, such as SSH keys)
-2. __`_terraform` folder contents__ - these are required to destroy or redeploy the node
-3. The __`orbs-node.json`__ file
 
-### Registering to the Orbs public network
+After deployment make sure to backup and securely store the deployment folder data, including:
 
-In order to register on the network, please follow [the Validator Registration process](https://github.com/orbs-network/orbs-ethereum-contracts/blob/master/voting/ethereum/instructions/validator_registration.md)
+* __Orbs keys__ (`<orbs private key file>` and any other credentials you used and configured, such as SSH keys)
+* _terraform cache folder - is required to destroy or redeploy the node
+* The `orbs-node-beta.json` file
 
-Contact Orbs after registration is done.
+Do not leave sensitive data such as the `<orbs private key file>` in an unsecure disk location.
 
+### Update Orbs Node configuration
 
-### What happens after deployment
+__Any modification to your configuration file MUST be done while the node is DOWN.__
 
-Once the deployment finishes, the node goes through several stages:
-1. First it will wait for the Ethereum node to finish syncing - this can take several hours and until that is done, the node will not be operational
-2. It will then bootstrap the initial network configuration.
-3. It will retrieve the network topology from an Ethereum contract to learn who are its other peers and connect to them.
+To update your node configuration
+1. run polygon destroy (e.g. `polygon destroy -f orbs-node-beta.json`)
+1. update your configuration JSON file as required
+1. run [polygon create](#deploy-the-node-using-polygon-cli)
 
-At that point if everything passes and the node is part of the topology, it will start syncing with other nodes.
+### Register your Guardian
 
-### How to inspect the network health
+To register on the network, go to [Guardian Registration](https://guardians.orbs.network/registration)
+(Requires Metamask)
 
-Now, your node has joined the network and should be syncing the existing blocks.
+### Verify your Node is deployed correctly
 
-To inspect your node operation on every virtual chain, Orbs has developed a special inspection route available on each node that provides access to node metrics.
-To access the metrics, navigate to `http://$NODE_IP/vchains/1100000/metrics` replacing __$NODE_IP__ with 
-your node IP.
+Check that all the services started without errors
+```
+http://<node ip>/services/boyar/status
+```
 
-You node will not be able to respond to any requests until its Ethereum node finished syncing - this can take several hours from deploy.
+Check your node's status in the PoS network (readings are 10 minutes delayed for finality)
+```
+http://<node ip>/services/management-service/status
+```
 
-The JSON you see will include a property called `BlockStorage.BlockHeight`, which indicates the block height that the network is currently on.
-Try refreshing this metrics page a couple of times, you should see this value increasing.
-
-If this is the case it means that the network is alive and healthy. 
 
 __Congratulations!__
 
 ## Troubleshooting
 
-1. If you get an Terraform error that your IP does not exist, check whether the combination of ip and region is correct in the node configuration file (`orbs-node.json`)
+1. If you get an Terraform error that your IP does not exist, check whether the combination of ip and region is correct in the node configuration file (`orbs-node-beta.json`)
 
 2. If the metrics page does not respond, it could be that the Ethereum node did not finish syncing - this takes several hours.
 
-3. If you are having trouble with Ethereum node, add `"ethereumEndpoint": "http://eth.orbs.com"` to your `node.json` and redeploy the node (`nebula destroy` and then `nebula create` as usual). If you have your own synced Ethereum node, you can use it as a value for `ethereumEndpoint`. We only provide `eth.orbs.com` for your convenience. Our long term goal is to use the Ethereum node that belongs to the Orbs node.
+3. If you're having Terraform errors, check whether your clock is configured correctly
 
-4. Contact Orbs for any other issues
+4. Contact the Orbs core team for any other issues
