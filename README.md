@@ -16,7 +16,7 @@ Coming soon...
 
 &nbsp;
 
-## Deprecated - Orbs Public Network - V1
+## Orbs Public Network - V1
 
 To launch a **public** Orbs node and participate in the official Orbs Proof-of-Stake, [read instructions here](public/orbs-public-blockchain-v1.md).
 
