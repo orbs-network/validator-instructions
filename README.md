@@ -8,9 +8,15 @@ Documentation for Orbs Guardians and node operators explaining how to launch and
 
 To launch a **public** Orbs node and participate in the v2.5 Orbs Proof-of-Stake, [read instructions here](public/orbs-public-blockchain.md).
 
+### Guardian Actions using Etherscan + Metamask
+
+[Withdraw Guardian Fees and Bootstrap](./public/withdraw_fees_bootstrap.md)
+
+[Claim Staking Rewards](./public/claim_staking_rweards.md)
+
 &nbsp;
 
-### Private Orbs Network - V2.5
+## Private Orbs Network - V2.5
 
 Coming soon...
 
