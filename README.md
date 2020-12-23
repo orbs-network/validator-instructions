@@ -1,33 +1,23 @@
 # Orbs Validator Instructions
 
-Documentation for Orbs Guardians and node operators explaining how to launch and maintain an Orbs node
+Documentation for Orbs Guardians and node operators explaining how to launch and maintain an Orbs node.
 
 &nbsp;
 
-## Orbs Public Network - V2.5
+## Orbs Public Network (V2.5)
 
-To launch a **public** Orbs node and participate in the v2.5 Orbs Proof-of-Stake, [read instructions here](public/orbs-public-blockchain.md).
+### Launch Orbs Node
 
-### Guardian Actions using Etherscan + Metamask
+To launch a **public** Orbs node and participate in the Orbs Proof-of-Stake v2.5 elections:
 
-[Withdraw Guardian Fees and Bootstrap](./public/withdraw_fees_bootstrap.md)
+* [Run the node on cloud service like AWS](./public/orbs-public-blockchain.md) *(recommended)*
 
-[Claim Staking Rewards](./public/claim_staking_rweards.md)
+* [or Run the node on your own infrastructure](./public/orbs-public-own-infra.md)
 
-&nbsp;
+### Common Guardian Actions using Etherscan + Metamask
 
-## Private Orbs Network - V2.5
+* [Withdraw Guardian fees and bootstrap](./public/withdraw_fees_bootstrap.md)
 
-Coming soon...
-
-&nbsp;
-
-## Orbs Public Network - V1
-
-To launch a **public** Orbs node and participate in the official Orbs Proof-of-Stake, [read instructions here](public/orbs-public-blockchain-v1.md).
+* [Claim staking rewards](./public/claim_staking_rweards.md)
 
 &nbsp;
-
-### Private Orbs network - V1
-
-To launch a private replica of Orbs network in a permissioned setting, [read instructions here](private/orbs-private-blockchain-v1.md).
