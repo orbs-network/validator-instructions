@@ -64,6 +64,63 @@ boyar --keys ./keys.json --management-config ./mgmt.json --log /var/efs/boyar-lo
 
 It is recommended to use some external process manager, for exampls, [Supervisord](https://github.com/Supervisor/supervisor).
 
+### Supervisord config example
+
+Place in `/opt/orbs/boyar.sh`
+
+```bash
+#!/bin/bash
+
+trap "kill -- -$$" EXIT
+
+multilog_err=1
+multilog_cmd="multilog s16777215 n32 /var/efs/boyar-logs/"
+
+while [[ "$multilog_err" -ne "0" ]]; do
+    sleep 1
+    echo "boyar logging pre checks..." | $multilog_cmd
+    multilog_err=$?
+done
+
+echo "Running boyar..."
+
+# FIXME: please set correct /path/to/keys.json
+# FIXME: please set correct /path/to/mgmt.json
+
+exec /usr/bin/boyar --keys /path/to/keys.json --max-reload-time-delay 0m --bootstrap-reset-timeout 30m --status /var/efs/boyar-status/status.json  --management-config /path/to/management-config.json --auto-update --shutdown-after-update 2>&1 | $multilog_cmd
+```
+
+Place in `/etc/supervisor/conf.d/boyar.conf`
+
+```ini
+[program:boyar]
+command=/opt/orbs/boyar.sh
+autostart=true
+autorestart=true
+environment=HOME="/root"
+stdout_logfile=/var/efs/boyar-logs/supervisor.stdout
+redirect_stderr=true
+stdout_logfile_maxbytes=10MB
+```
+
+### Systemd unit config example
+
+```ini
+[Unit]
+Description=Boyar service
+After=network.target
+
+[Service]
+# FIXME: please set correct /path/to/keys.json
+# FIXME: please set correct /path/to/mgmt.json
+ExecStart=/usr/bin/boyar --keys /path/to/keys.json --management-config /path/to/mgmt.json --log /var/efs/boyar-logs/current --status /var/efs/boyar-status/status.json --auto-update --shutdown-after-update --bootstrap-reset-timeout 30m
+Restart=always
+KillSignal=SIGHUP
+
+[Install]
+WantedBy=default.target
+```
+
 ## Verifying your node's health
 
 From your Linux machine you can access these URLs:
