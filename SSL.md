@@ -11,13 +11,13 @@ sudo su
 apt-get -y install certbot
 
 # disable http proxy
-docker service scale http-api-reverse-proxy-stack=0
+docker service scale http-api-reverse-proxy=0
 
 # run and respond to all the questions
 certbot certonly --standalone
 
 # enable http proxy
-docker service scale http-api-reverse-proxy-stack=1
+docker service scale http-api-reverse-proxy=1
 
 # archive your certificates
 tar cvfz certificates.tgz /etc/letsencrypt/ && chown ubuntu certificates.tgz
@@ -46,4 +46,4 @@ Add following lines to `node.json`:
 
 ## Redeploy the node
 
-Run `nebula destroy` and `nebula create` just like you did the first time you deployed the node.
+Run `polygon destroy` and `polygon create` just like you did the first time you deployed the node.
