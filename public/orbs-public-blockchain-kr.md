@@ -129,6 +129,7 @@ __이 폴더는 설치가 완료되더라도 삭제하면 안되며, 다른 곳�
         "nodeCount": 0,
         "cachePath": "./_terraform",
         "incomingSshCidrBlocks": ["ssh 접근제한 설정",...],
+        "boyarAutoUpdate": true,
         "managementConfig": {
             "orchestrator": {
                 "DynamicManagementConfig": {
