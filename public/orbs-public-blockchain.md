@@ -141,8 +141,7 @@ The content of the `orbs-node.json` should be:
                     },
                     "Config": {
                         "BootstrapMode": true,
-                        "EthereumEndpoint": "<ethereum endpoint url>",
-                        "DockerNamespace":"orbsnetwork"
+                        "EthereumEndpoint": "<ethereum endpoint url>"
                     }
                 }
             }
