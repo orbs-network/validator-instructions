@@ -215,9 +215,10 @@ http://<node ip>/services/management-service/status
 
 ### Polygon network support
 
-New Guardians may register on Polygon network as well as Ethereum in the same link [Guardian Registration](https://guardians.orbs.network/registration)
+__New Guardians__ may register on Polygon or on Ethereum using the following link
+[Guardian Registration](https://guardians.orbs.network/registration)
 
-__*** Existing guardians ***__ are already registred on both networks automatically.
+__Existing guardians__ are already registred on both networks automatically.
 
 
 __Congratulations!__
