@@ -211,6 +211,14 @@ Check your node's status in the PoS network (readings are 10 minutes delayed for
 http://<node ip>/services/management-service/status
 ```
 
+<img src="https://analyticsinsight.b-cdn.net/wp-content/uploads/2022/03/Polygon-MATIC-amp-Terra-LUNA-Price-Drop-Bitgert-Surge-To.jpeg" alt="drawing" width="200"/>
+
+### Polygon network support
+
+New Guardians may register on Polygon network as well as Ethereum in the same link [Guardian Registration](https://guardians.orbs.network/registration)
+
+__*** Existing guardians ***__ are already registred on both networks automatically.
+
 
 __Congratulations!__
 
