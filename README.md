@@ -12,7 +12,7 @@ To launch a **public** Orbs node and participate in the Orbs Proof-of-Stake v2.5
 
 * [Run the node on cloud service like AWS](./public/orbs-public-blockchain.md) *(recommended)*
 
-* [Run the node on your own infrastructure *ubuntu 18* step by step](./public/orbs-public-own-infra-step.md)
+* [Run the node on your own infrastructure *ubuntu 18* step by step](./public/orbs-public-own-infra-steps.md)
 
 * [Run the node on your own infrastructure](./public/orbs-public-own-infra.md)
 
