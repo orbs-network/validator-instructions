@@ -194,6 +194,10 @@ To update your node configuration
 1. update your configuration JSON file as required
 1. run [polygon create](#deploy-the-node-using-polygon-cli)
 
+### Move Funds to your node address
+Your node will need funds to occasionally send transactions over ethereum and polygon network. For example when the node is ready for committee a tx will be sent over the network.
+You will need to send 1 ETH and 1 MATIC to your ORBS node address.
+
 ### Register your Guardian
 
 To register on the network, go to [Guardian Registration](https://guardians.orbs.network/registration)
