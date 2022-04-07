@@ -10,21 +10,21 @@
 가이드대로 하려면 아래 사항들을 먼저 확인하고 준비해야합니다:
 
 - PC - 맥(Mac) 또는 리눅스 (본 가이드는 Mac을 기준으로 작성하였으므로 가능하면 Mac 환경 권장)
-- 이더리움 Endpoint URL. 에서는 [Infura 무료 계정](infura-setup-free.md)을 이용할 수 있습니다.
-- **새로운 AWS 계정**
+- 이더리움 Endpoint URL. [Infura 무료 계정](infura-setup-free.md)을 이용할 수 있습니다.
+- **새로운 AWS 계정 (admin 권한이 있는 계정)**
   - V1 노드가 운영중이라면 같은 AWS 계정을 사용해도 괜찮습니다
-- AWS client 설치 - `brew install awscli` 명령을 통해 PC에 설치할 수 있습니다
+- AWS client 설치 - 다음 명령을 통해 PC에 설치할 수 있습니다 `brew install awscli`
 
-  awscli는 AWS에 원격으로 접속할 수 있는 클라이언트 프로그램입니다.
+  (awscli는 AWS에 원격으로 접속할 수 있는 클라이언트 프로그램입니다.)
 
 - 노드에서 사용할 새로운 주소(가디언 지갑 주소와 별도). [아래 내용](#노드용-주소와-프라이빗-키Private-Key-준비)을 참조하세요.
-- 가디언 등록시 사용할 가디언 지갑 (Windows에서 진행가능)
-- 메타마스크 지갑 (Windows에서 진행가능)
+- 가디언 등록시 사용할 가디언 지갑 (Metamask, Ledger등 개인지갑으로 Windows에서 진행가능)
+- 메타마스크 지갑 (Ledger등을 연결할 Chrome 확장앱으로 Windows에서 진행가능)
 - AWS credentials 프로파일 설정:
 
   `aws configure` 명령어로 기본 "default" 프로파일을 설정할 수 있습니다. aws 프로파일 설정에 대한 자세한 내용은 [aws 문서](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)를 참조하세요.
 
-  AWS 계정에 대한 관리자 권한은 위에서 입력한 프로파일에 구성해야합니다.
+  AWS 계정에 대한 관리자 권한은 위에서 입력한 프로파일로 구성해야합니다.
 
 - [Node.js](https://nodejs.org/en/) version 8 또는 그 이상 버전 설치
   
@@ -151,8 +151,7 @@ __이 폴더는 설치가 완료되더라도 삭제하면 안되며, 다른 곳�
                     },
                     "Config": {
                         "BootstrapMode": true,
-                        "EthereumEndpoint": "이더리움 endpoint url",
-                        "DockerNamespace":"orbsnetwork"
+                        "EthereumEndpoint": "이더리움 endpoint url"
                     }
                 }
             }
@@ -207,13 +206,17 @@ __노드 설정을 변경하는 경우에는 반드시 노드가 제거되고 �
 
 1. polygon destroy 명령어 노드 제거 실행 `polygon destroy -f orbs-node.json`
 2. JSON 파일 수정 (수정할 항목 변경)
-3. polygon create 명령어로 다시 설치실행 ([설치항목](#Polygon-CLI를-이용하여-노드-설치하기))
+3. polygon create 명령어로 다시 설치실행 ([설치항목 다시 보기](#Polygon-CLI를-이용하여-노드-설치하기))
+
+### node 주소로 코인 입금하기
+
+노드에서는 이더리움과 폴리곤 네트워크에서 트랜잭션을 발생시키기 때문에 가스비 용도의 코인이 들어있어야 합니다. 예를 들어 네트워크 상에 노드가 위원회 참여할 준비가 되었을 경우 트랜잭션을 발생시킵니다. 노드용 주소에 1 ETH 그리고 폴리곤 네트워크에는 1 MATIC을 넣어두어야 합니다.
 
 ### 가디언 등록하기
 
 네트워크에 가디언을 등록하려면 별도의 등록용 웹사이트앱에 접속해야합니다. 아래 링크를 통해 해당 웹에서 안내를 따라 등록을 완료해주세요. 메타마스크를 통한 지갑 연동이 필요합니다.
 
-[가디언 등록하러 가기](https://guardians.orbs.network/registration) (메타마스크 지갑 필요)
+[가디언 포탈에 등록하러 가기](https://guardians.orbs.network/ko/registration) (가디언용 주소가 등록된 메타마스크 지갑 연결 필요)
 
 ### 노드 설치가 올바르게 완료되었는지 확인
 
@@ -226,6 +229,20 @@ PoS 네트워크에서의 노드 상태를 아래 주소에서 확인할 수 있
 ```
 http://<node ip>/services/management-service/status
 ```
+
+<img src="https://analyticsinsight.b-cdn.net/wp-content/uploads/2022/03/Polygon-MATIC-amp-Terra-LUNA-Price-Drop-Bitgert-Surge-To.jpeg" alt="drawing" width="200"/>
+
+### 폴리곤 네트워크(Polygon network) 지원
+
+**새로 등록하는 가디언**은 이더리움 네트워크와 폴리곤 네트워크 양쪽에 모두 등록을 진행해 주십시오.
+
+[가디언 포탈에 등록하러 가기](https://guardians.orbs.network/ko/registration)
+
+추가 인증을 받기 위해서는 이더리움 등록이 필수입니다.
+
+네트워크를 변경하기 위해서는 우측 상단 언어선택 근처에 있는 네트워크 선택메뉴에서 변경할 수 있습니다.
+
+**기존의 가디언**들은 자동으로 양쪽 네트워크에 등록이 완료되어 있습니다.
 
 __모든 설정이 완료되었습니다. 축하드립니다!__
 
