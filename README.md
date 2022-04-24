@@ -16,6 +16,14 @@ To launch a **public** Orbs node and participate in the Orbs Proof-of-Stake v2.5
 
 * [Run the node on your own infrastructure](./public/orbs-public-own-infra.md)
 
+### Firewall Port Opening
+In case your node is behinf a firewall, for best performance, open all ports for incoming traffic.
+The most important ports are:
+
+* ```80``` - Services status and logs
+
+* ```7666``` - Node management
+
 ### Common Guardian Actions using Etherscan + Metamask
 
 * [Withdraw Guardian fees and bootstrap](./public/withdraw_fees_bootstrap.md)
