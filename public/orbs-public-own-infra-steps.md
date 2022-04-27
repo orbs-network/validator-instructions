@@ -8,7 +8,7 @@
 * Make sure
     * OS version is up to date
     * Node is open to the internet and has External IP
-    * No default firewall port blocking (especially port 80)
+    * Open ports 80 7666 10000-10100 9100 as discribed in main instructions 
 
 * `ETHEREUM_ENDPOINT` Get infura or any other web3 http url
 * `NODE_ADDRESS` Etherum public key but without `0x` prefix
