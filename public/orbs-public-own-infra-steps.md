@@ -167,6 +167,25 @@ KillSignal=SIGHUP
 WantedBy=default.target
 ```
 
+### Prometheus node-exporter (optional)
+- create a shell file and execute
+```
+curl -L https://github.com/prometheus/node_exporter/releases/download/v${var.node_exporter_version}/node_exporter-${var.node_exporter_version}.linux-amd64.tar.gz -o /home/ubuntu/node_exporter.tar.gz
+cd /home/ubuntu
+tar xvfz node_exporter.tar.gz && mv node_exporter-0.18.1.linux-amd64/node_exporter .
+chmod +x node_exporter
+rm -f node_exporter.tar.gz
+
+echo "[program:node_exporter]
+command=/home/ubuntu/node_exporter --collector.ntp --collector.tcpstat --collector.supervisord
+autostart=true
+autorestart=true
+stderr_logfile=/var/log/node_exporter.err.log
+stdout_logfile=/var/log/node_exporter.log" >> /etc/supervisor/conf.d/node_exporter.conf
+
+supervisorctl reread && supervisorctl update
+```
+
 ## Verifying your node's health
 
 From your Linux machine you can access these URLs:
