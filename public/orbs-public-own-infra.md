@@ -130,3 +130,19 @@ From your Linux machine you can access these URLs:
 * http://localhost/services/management-service/logs
 
 You can also replace `localhost` with your node IP address.
+
+## Register your Guardian
+
+To register on the network, go to [Guardian Registration](https://guardians.orbs.network/registration)
+(Requires Metamask)
+
+## Polygon network support
+
+**New Guardians** Please Register on both Ethereum and Polygon networks, using the following link
+[Guardian Registration](https://guardians.orbs.network/registration)
+
+Ethereum regisration is mandatory in order to get certified.
+
+Changing network is available on top right near the language selector.
+
+**Congratulations!**
