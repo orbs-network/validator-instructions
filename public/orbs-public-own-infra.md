@@ -67,7 +67,9 @@ mkdir -p /var/efs/ /var/efs/boyar-status /var/efs/boyar-logs
 boyar --keys ./keys.json --management-config ./mgmt.json --log /var/efs/boyar-logs/current --status /var/efs/boyar-status/status.json --bootstrap-reset-timeout 30m --auto-update --shutdown-after-update
 ```
 
-It is recommended to use some external process manager, for exampls, [Supervisord](https://github.com/Supervisor/supervisor).
+Boyar is also responsible for upgrading and supervising modules in the node. To ensure it is constantly running, and to enable self upgrading of Boyar itself, an external process manager is required. 
+
+For example, [Supervisord](https://github.com/Supervisor/supervisor):
 
 ### Supervisord config example
 
