@@ -4,7 +4,11 @@
 
 ## Prerequisites
 
-* Create an instance/machine with ubuntu 18 (or later) and atleast 10GB disk
+* Hardware Server 
+    * CPU: Xeon series or higher recommended (equivalent to AWS r5.large spec)
+    * Memory: 16GB+
+    * SSD: 256GB+
+* Create an instance/machine with ubuntu 18 (or later) and at least 10GB disk
 * Make sure
     * OS version is up to date
     * Node is open to the internet and has External IP
