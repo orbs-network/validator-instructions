@@ -3,6 +3,11 @@
 ## Prerequisites
 
 * A Linux machine with Docker Swarm
+  * Specification
+    * CPU: Xeon series or higher recommended (equivalent to AWS r5.large spec)
+    * Memory: 16GB+
+    * SSD: 256GB+
+    * OS: Ubuntu 18 or later LTS
 * Boyar [binary download](https://github.com/orbs-network/boyarin/releases)
 * Connection to Ethereum node (`<ETHEREUM_ENDPOINT>` url)
 * Directories `/var/efs`, `/var/efs/boyar-status` and `/var/efs/boyar-logs` should be created on the machine and have enough space (separate filesystem is recommended, you can use NFS if you like)
