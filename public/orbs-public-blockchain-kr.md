@@ -102,15 +102,15 @@ Orbs 노드 주소는 표준 이더리움 주소를 사용합니다. 이 주소�
 
 ### 노드 설치를 위한 폴더 만들기
 
-다른 파일들과 섞이지 않도록 노드 설정을 저장할 폴더를 따로 만들어주세요(폴더명 예시: "orbs-v2"). 이 폴더에는 설정파일과 로그, 향후 노드 제거시 필요한 데이터가 기록됩니다.
+다른 파일들과 섞이지 않도록 노드 설정을 저장할 폴더를 따로 만들어주세요(폴더명 예시: "orbs-node"). 이 폴더에는 설정파일과 로그, 향후 노드 제거시 필요한 데이터가 기록됩니다.
 
-    mkdir orbs-v2
+    mkdir orbs-node
 
 __이 폴더는 설치가 완료되더라도 삭제하면 안되며, 다른 곳에 복사해서 백업해 두십시오.__
 
 새로 만든 폴더로 이동하여 아래 순서를 계속 진행해주세요.
 
-    cd orbs-v2
+    cd orbs-node
 
 ### 설치를 위한 JSON 파일 생성, 설정하기
 
@@ -229,8 +229,6 @@ PoS 네트워크에서의 노드 상태를 아래 주소에서 확인할 수 있
 ```
 http://<node ip>/services/management-service/status
 ```
-
-<img src="https://analyticsinsight.b-cdn.net/wp-content/uploads/2022/03/Polygon-MATIC-amp-Terra-LUNA-Price-Drop-Bitgert-Surge-To.jpeg" alt="drawing" width="200"/>
 
 ### 폴리곤 네트워크(Polygon network) 지원
 
